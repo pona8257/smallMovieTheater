@@ -17,7 +17,7 @@
 			<result column="REGISTRATION" property="registration"/>
 			<result column="COUNT" property="count"/>
 			<result column="REMOVES" property="removes"/>
-			<result column="IMAGE" property="image"/>
+			<result column="IMAGE_NAME" property="imageName"/>
 		</association>
 	</resultMap>
 	
@@ -41,13 +41,14 @@
 	<!-- Cart mapper -->
 	<insert id="insertCart" parameterType="CartDTO">
 		INSERT INTO CART_T(CART_NO, PRODUCT_NO, COUNT, USER_ID)
-			VALUES(CART_SEQ.NEXTVAL, #{productDTO.productNo}, #{count}, 'WQQW')
+			VALUES(CART_SEQ.NEXTVAL, #{productDTO.productNo}, #{count}, #{userId})
 	</insert>
 	
-	<select id="selectCartList"  resultMap="CartMap">
+	<select id="selectCartList"  resultMap="CartMap" parameterType="String">
 		SELECT C.CART_NO, C.USER_ID, P.PRODUCT_NAME, P.PRICE, P.PRODUCT_CONTENT, C.COUNT, P.IMAGE_NAME
 		  FROM PRODUCT_T P INNER JOIN CART_T C
 		    ON P.PRODUCT_NO = C.PRODUCT_NO
+		 WHERE USER_ID = #{userId}
 	</select>
 	
 	<update id="updateCart" parameterType="int">

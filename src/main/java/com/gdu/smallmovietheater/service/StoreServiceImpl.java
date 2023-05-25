@@ -6,12 +6,14 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import com.gdu.smallmovietheater.domain.CartDTO;
+import com.gdu.smallmovietheater.domain.OrderDTO;
 import com.gdu.smallmovietheater.domain.ProductDTO;
 import com.gdu.smallmovietheater.mapper.StoreMapper;
 
@@ -35,12 +37,15 @@ public class StoreServiceImpl implements StoreService {
 	
 	@Override
 	public int insertCart(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String userId = (String)session.getAttribute("userId");
 		int count = Integer.parseInt(request.getParameter("count"));
 		CartDTO cartDTO = new CartDTO();
 		ProductDTO productDTO = new ProductDTO();
 		productDTO.setProductNo(Integer.parseInt(request.getParameter("productNo")));
 		cartDTO.setProductDTO(productDTO);
 		cartDTO.setCount(count);
+		cartDTO.setUserId(userId);
 		/*
 		HttpSession session = request.getSession();
 		String userId = (String)session.getAttribute("loginId");
@@ -54,12 +59,12 @@ public class StoreServiceImpl implements StoreService {
 	
 	@Override
 	public List<CartDTO> selectCartList(HttpServletRequest request, Model model) {
-		/*
-		HttpSession session = request.getSession();
-		String loginId = (String)session.getAttribute("loginId");
-		*/
 		
-		List<CartDTO> carts = storeMapper.selectCartList();
+		HttpSession session = request.getSession();
+		String userId = (String)session.getAttribute("userId");
+		
+		
+		List<CartDTO> carts = storeMapper.selectCartList(userId);
 		int totalPrice = 0;
 		int totalCount = 0;
 		for(int i = 0; i < carts.size(); i++) {
@@ -103,12 +108,13 @@ public class StoreServiceImpl implements StoreService {
 	}
 	
 	
-	public int insertOrder() {
+	public int insertOrder(HttpServletRequest request) {
 		
-		int userNo = 1;
+		HttpSession session = request.getSession();
+		int userNo = (int)session.getAttribute("userNo");
 		storeMapper.insertOrder(userNo);
 		
-		
+		OrderDTO orderDTO = storeMapper.selectOrder();
 		
 		return 0;
 	}

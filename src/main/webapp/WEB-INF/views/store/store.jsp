@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>스토어</title>
 <script src="${contextPath}/resources/js/lib/jquery-3.6.4.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
@@ -85,6 +85,12 @@
 </style>
 <script type="text/javascript">
 	
+	$('cart_label').on('click', function(ev){
+		if(${sessionScope.userId == null}){
+			alert('로그인이 필요한 서비스입니다. \n 로그인창으로 이동하시겠습니까?');
+		}
+	})
+	
 	if('${insertResult}' != ''){
 		if(confirm('장바구니에 상품을 담았습니다.\n장바구니로 이동하시겠습니까?')){
 			location.href = '${contextPath}/store/cart.form';
@@ -99,9 +105,7 @@
     </a>
   </header>
   
-  <div class="login">
-    <button>로그인</button>
-  </div>
+  
   
  	 <div id="cart">
 		<a href="${contextPath }/store/cart.form" id="cart_label"><i class="fa-solid fa-cart-shopping fa-2x"></i></a>

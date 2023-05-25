@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>상세보기</title>
 <script src="${contextPath}/resources/js/lib/jquery-3.6.4.min.js"></script>
 <script type="text/javascript " src="https://service.iamport.kr/js/iamport.payment-1.2.0.js"></script>
 <style>
@@ -67,10 +67,11 @@
 	}
 	
 	function fnInCart(){
-		if(${product.count} - $('#count').val() < 0){
-			alert('팝콘 수량이 부족합니다.');
-			return;
+		
+		if(${sessionScope.userId == null}){
+			alert('로그인이 필요한 서비스입니다. \n 로그인창으로 이동하시겠습니까?');
 		}
+		
 	}
 	
 </script>
