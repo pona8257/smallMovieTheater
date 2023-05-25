@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace는 @Mapper를 지정한다. -->
+<mapper namespace="com.gdu.smallmovietheater.mapper.StoreMapper">
+	
+	<resultMap type="CartDTO" id="CartMap">
+		<id column="CART_NO" property="cartNo"/>
+		<result column="COUNT" property="count"/>
+		<association javaType="ProductDTO" property="productDTO">
+			<id column="PRODUCT_NO" property="productNo"/>
+			<result column="PRODUCT_NAME" property="productName"/>
+			<result column="PRICE" property="price"/>
+			<result column="PRODUCT_CONTENT" property="productContent"/>
+			<result column="REGISTRATION" property="registration"/>
+			<result column="COUNT" property="count"/>
+			<result column="REMOVES" property="removes"/>
+			<result column="IMAGE" property="image"/>
+		</association>
+	</resultMap>
+	
+	<!-- Product mapper -->
+	<select id="productList" resultType="ProductDTO">
+		SELECT PRODUCT_NO, PRODUCT_NAME, PRICE, PRODUCT_CONTENT, REGISTRATION, COUNT, REMOVES, IMAGE_PATH, IMAGE_NAME
+		  FROM PRODUCT_T
+	</select>
+	
+	<select id="productDetail" parameterType="int" resultType="ProductDTO">
+		SELECT PRODUCT_NO, PRODUCT_NAME, PRICE, PRODUCT_CONTENT, REGISTRATION, COUNT, REMOVES, IMAGE_PATH, IMAGE_NAME
+		  FROM PRODUCT_T
+		 WHERE PRODUCT_NO = #{productNo}
+	</select>
+	
+	
+	
+	
+	
+	
+	<!-- Cart mapper -->
+	<insert id="insertCart" parameterType="CartDTO">
+		INSERT INTO CART_T(CART_NO, PRODUCT_NO, COUNT, USER_ID)
+			VALUES(CART_SEQ.NEXTVAL, #{productDTO.productNo}, #{count}, 'WQQW')
+	</insert>
+	
+	<select id="selectCartList"  resultMap="CartMap">
+		SELECT C.CART_NO, C.USER_ID, P.PRODUCT_NAME, P.PRICE, P.PRODUCT_CONTENT, C.COUNT, P.IMAGE_NAME
+		  FROM PRODUCT_T P INNER JOIN CART_T C
+		    ON P.PRODUCT_NO = C.PRODUCT_NO
+	</select>
+	
+	<update id="updateCart" parameterType="int">
+		UPDATE PRODUCT_T
+		   SET COUNT = COUNT - ${count}
+		 WHERE PRODUCT_NO = #{productNo}
+	</update>
+	
+	<delete id="deleteCart" parameterType="List">
+		DELETE
+		  FROM CART_T
+		  <where>
+		  	<foreach collection="list" item="cartNo" open="CART_NO IN(" separator="," close=")">
+				#{cartNo}
+			</foreach>
+		  </where>
+	</delete>
+	
+	
+	<!-- 결제 -->
+	<insert id="insertOrder" parameterType="String">
+		INSERT INTO ORDER_T
+			VALUES (ORDER_SEQ.NEXTVAL, ${userId}, TO_CHAR(SYSDATE, 'YYMMDD'))
+	</insert>
+	
+	
+</mapper>
