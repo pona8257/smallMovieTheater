@@ -82,7 +82,7 @@ public class UserController {
 	  }
 	@GetMapping("/mypage.do")
 	  public String mypage(HttpSession session, Model model) {  // 마이페이지로 이동
-	    String userId = (String) session.getAttribute("loginId");
+	    String userId = (String) session.getAttribute("userId");
 	    model.addAttribute("userId", userService.getUserById(userId));
 	    return "user/mypage";
 	  }

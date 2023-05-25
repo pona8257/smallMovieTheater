@@ -89,6 +89,9 @@
   function fnJoin(){
 	  location.href = '${contextPath}/user/join.form';
   }
+  function fnLogout(){
+	  location.href = '${contextPath}/user/logout.do';
+  }
 </script>
 
 <body>
@@ -107,6 +110,7 @@
   <c:if test="${sessionScope.userId != null}">
       <div style="text-align: right;">
         <a href="${contextPath}/user/mypage.do">${sessionScope.userId}</a>님 반갑습니다 ♥
+        <input type="button" onclick="fnLogout()" value="로그아웃">
       </div>
   </c:if>
    

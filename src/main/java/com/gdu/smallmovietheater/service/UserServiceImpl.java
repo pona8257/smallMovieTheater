@@ -271,7 +271,7 @@ public class UserServiceImpl implements UserService {
 	    
 	    // DB에서 AUTOLOGIN_ID 칼럼과 AUTOLOGIN_EXPIRED_AT 칼럼 정보 삭제하기
 	    HttpSession session = request.getSession();
-	    String userId = (String) session.getAttribute("loginId");
+	    String userId = (String) session.getAttribute("userId");
 	    userMapper.deleteAutologin(userId);
 	    
 	    // autoLoginId 쿠키 삭제하기
