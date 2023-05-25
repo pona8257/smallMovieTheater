@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace는 @Mapper를 지정한다. -->
+<mapper namespace="com.gdu.smallmovietheater.mapper.UserMapper">
+
+  <select id="selectUserById" parameterType="String" resultType="UserDTO">
+    SELECT USER_ID, USER_EMAIL, JOINED_AT
+      FROM USER_T
+     WHERE USER_ID = #{userId}
+  </select>
+  
+  <select id="selectSleepUserById" parameterType="String" resultType="SleepUserDTO">
+    SELECT USER_ID
+      FROM SLEEP_USER_T
+     WHERE USER_ID = #{userId}
+  </select>
+
+  <select id="selectLeaveUserById" parameterType="String" resultType="LeaveUserDTO">
+    SELECT USER_ID
+      FROM LEAVE_USER_T
+     WHERE USER_ID = #{userId}
+  </select>
+
+  <select id="selectUserByEmail" parameterType="String" resultType="UserDTO">
+    SELECT USER_EMAIL
+      FROM USER_T
+     WHERE USER_EMAIL = #{userEmail}
+  </select>
+  
+  <select id="selectSleepUserByEmail" parameterType="String" resultType="SleepUserDTO">
+    SELECT USER_EMAIL
+      FROM SLEEP_USER_T
+     WHERE USER_EMAIL = #{userEmail}
+  </select>
+
+  <select id="selectLeaveUserByEmail" parameterType="String" resultType="LeaveUserDTO">
+    SELECT USER_EMAIL
+      FROM LEAVE_USER_T
+     WHERE USER_EMAIL = #{userEmail}
+  </select>
+
+  <insert id="insertUser" parameterType="UserDTO">
+    INSERT INTO USER_T (
+        USER_NO
+      , USER_ID
+      , USER_PASSWORD
+      , USER_NAME
+      , USER_GENDER
+      , USER_EMAIL
+      , USER_MOBILE
+      , USER_BIRTHYEAR
+      , USER_BIRTHDATE
+      , POSTCODE
+      , ROAD_ADDRESS
+      , JIBUN_ADDRESS
+      , DETAIL_ADDRESS
+      , EXTRA_ADDRESS
+      , AGREECODE
+      , JOINED_AT
+      , PW_MODIFIED_AT
+      , AUTOLOGIN_ID
+      , AUTOLOGIN_EXPIRED_AT
+    ) VALUES (
+        USER_SEQ.NEXTVAL
+      , #{userId}
+      , #{userPassword}
+      , #{userName}
+      , #{userGender}
+      , #{userEmail}
+      , #{userMobile}
+      , #{userBirthyear}
+      , #{userBirthdate}
+      , #{postcode}
+      , #{roadAddress}
+      , #{jibunAddress}
+      , #{detailAddress}
+      , #{extraAddress}
+      , #{agreecode}
+      , SYSDATE
+      , SYSDATE
+      , NULL
+      , NULL
+    )
+  </insert>
+
+  <select id="selectUserByUserDTO" parameterType="UserDTO" resultType="UserDTO">
+    SELECT USER_ID
+      FROM USER_T
+     WHERE USER_ID = #{userId}
+       AND USER_PASSWORD = #{userPassword}
+  </select>
+  <insert id="insertUserAccess" parameterType="String">
+    INSERT INTO USER_ACCESS_T (
+        USER_ID
+      , LAST_LOGIN_AT
+    ) VALUES (
+        #{userId}
+      , SYSDATE
+    )
+  </insert>
+  <update id="updateUserAccess" parameterType="String">
+    UPDATE USER_ACCESS_T
+       SET LAST_LOGIN_AT = SYSDATE
+     WHERE USER_ID = #{userId}
+  </update>
+  <update id="insertAutologin" parameterType="UserDTO">
+    UPDATE USER_T
+       SET AUTOLOGIN_ID = #{autologinId}
+         , AUTOLOGIN_EXPIRED_AT = #{autologinExpiredAt}
+     WHERE USER_ID = #{userId}
+  </update>
+  <update id="deleteAutologin" parameterType="String">
+    UPDATE USER_T
+       SET AUTOLOGIN_ID = NULL
+         , AUTOLOGIN_EXPIRED_AT = NULL
+     WHERE USER_ID = #{userId}
+  </update>
+  <select id="selectAutologin" parameterType="String">
+    SELECT USER_ID
+      FROM USER_T
+     WHERE AUTOLOGIN_ID = #{autologinId}
+       AND AUTOLOGIN_EXPIRED_AT > SYSDATE
+  </select>
+
+  
+  <insert id="insertLeaveUser" parameterType="LeaveUserDTO">
+    INSERT INTO LEAVE_USER_T (
+        USER_ID
+      , USER_EMAIL
+      , JOINED_AT
+      , LEAVED_AT
+    ) VALUES (
+        #{userId}
+      , #{userEmail}
+      , #{joinedAt}
+      , SYSDATE
+    )
+  </insert>
+  <delete id="deleteUser" parameterType="String">
+    DELETE
+      FROM USER_T
+     WHERE USER_ID = #{userId}
+  </delete>
+
+  <!-- 휴면처리 1단계 : 1년(12개월) 이상 접속 내역(USER_ACCESS_T의 LAST_LOGIN_AT)이 없는 회원을 휴면 테이블에 저장하기 -->
+  <insert id="insertSleepUser">
+    INSERT INTO SLEEP_USER_T (
+        USER_NO
+      , USER_ID
+      , USER_PASSWORD
+      , USER_NAME
+      , USER_GENDER
+      , USER_EMAIL
+      , USER_MOBILE
+      , USER_BIRTHYEAR
+      , USER_BIRTHDATE
+      , POSTCODE
+      , ROAD_ADDRESS
+      , JIBUN_ADDRESS
+      , DETAIL_ADDRESS
+      , EXTRA_ADDRESS
+      , AGREECODE
+      , JOINED_AT
+      , PW_MODIFIED_AT
+      , SLEPT_AT
+    ) (SELECT U.USER_NO
+            , U.USER_ID
+            , U.USER_PASSWORD
+            , U.USER_NAME
+            , U.USER_GENDER
+            , U.USER_EMAIL
+            , U.USER_MOBILE
+            , U.USER_BIRTHYEAR
+            , U.USER_BIRTHDATE
+            , U.POSTCODE
+            , U.ROAD_ADDRESS
+            , U.JIBUN_ADDRESS
+            , U.DETAIL_ADDRESS
+            , U.EXTRA_ADDRESS
+            , U.AGREECODE
+            , U.JOINED_AT
+            , U.PW_MODIFIED_AT
+            , SYSDATE
+         FROM USER_T U LEFT OUTER JOIN USER_ACCESS_T UA
+           ON U.USER_ID = UA.USER_ID
+        WHERE MONTHS_BETWEEN(SYSDATE, UA.LAST_LOGIN_AT) >= 12  <!-- 12개월 이상 로그인 이력이 없는 회원 -->
+           OR (MONTHS_BETWEEN(SYSDATE, U.JOINED_AT) >= 12 AND UA.LAST_LOGIN_AT IS NULL))  <!-- 가입일이 12개월 이상 지나고, 로그인 이력이 아예 없는 회원 -->
+  </insert>
+
+  <!-- 휴면처리 2단계 : 1년(12개월) 이상 접속 내역(USER_ACCESS_T의 LAST_LOGIN_AT)이 없는 회원을 회원 테이블에서 삭제하기 -->
+  <delete id="deleteUserForSleep">
+    DELETE
+      FROM USER_T
+     WHERE USER_ID IN(SELECT U.USER_ID
+                   FROM USER_T U LEFT OUTER JOIN USER_ACCESS_T UA
+                     ON U.USER_ID = UA.USER_ID
+                  WHERE MONTHS_BETWEEN(SYSDATE, UA.LAST_LOGIN_AT) >= 12
+                     OR (MONTHS_BETWEEN(SYSDATE, U.JOINED_AT) >= 12 AND UA.LAST_LOGIN_AT IS NULL))
+  </delete>
+
+  <!-- 휴면복원 1단계 : 휴면 테이블의 데이터를 회원 테이블에 저장하기 -->
+  <insert id="insertRestoreUser" parameterType="String">
+    INSERT INTO USER_T (
+        USER_NO
+      , USER_ID
+      , USER_PASSWORD
+      , USER_NAME
+      , USER_GENDER
+      , USER_EMAIL
+      , USER_MOBILE
+      , USER_BIRTHYEAR
+      , USER_BIRTHDATE
+      , POSTCODE
+      , ROAD_ADDRESS
+      , JIBUN_ADDRESS
+      , DETAIL_ADDRESS
+      , EXTRA_ADDRESS
+      , AGREECODE
+      , JOINED_AT
+      , PW_MODIFIED_AT
+    ) (SELECT USER_NO
+            , USER_ID
+            , USER_PASSWORD
+            , USER_NAME
+            , USER_GENDER
+            , USER_EMAIL
+            , USER_MOBILE
+            , USER_BIRTHYEAR
+            , USER_BIRTHDATE
+            , POSTCODE
+            , ROAD_ADDRESS
+            , JIBUN_ADDRESS
+            , DETAIL_ADDRESS
+            , EXTRA_ADDRESS
+            , AGREECODE
+            , JOINED_AT
+            , PW_MODIFIED_AT
+         FROM SLEEP_USER_T
+        WHERE USER_ID = #{userId})
+  </insert>
+  
+  <!-- 휴면복원 2단계 : 복원할 회원을 SLEEP_USER_T 테이블에서 삭제하기 -->
+  <delete id="deleteSleepUser" parameterType="String">
+    DELETE
+      FROM SLEEP_USER_T
+     WHERE USER_ID = #{userId}
+  </delete>
+
+
+
+</mapper>
