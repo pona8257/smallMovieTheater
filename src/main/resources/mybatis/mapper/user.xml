@@ -87,7 +87,7 @@
   </insert>
 
   <select id="selectUserByUserDTO" parameterType="UserDTO" resultType="UserDTO">
-    SELECT USER_ID
+    SELECT USER_ID, USER_NO
       FROM USER_T
      WHERE USER_ID = #{userId}
        AND USER_PASSWORD = #{userPassword}
