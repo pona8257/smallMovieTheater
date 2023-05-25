@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace는 @Mapper를 지정한다. -->
+<mapper namespace="com.gdu.smallmovietheater.mapper.ReserveMapper">
+
+	<resultMap type="ReservationDTO" id="ReservationMap">
+	    <id column="RESERVATION_NO" property="reservationNo"/>
+	    <result column="USER_NO" property="userNo"/>
+	    <result column="RESERVATION_ROW" property="reservationRow"/>
+	    <result column="RESERVATION_COLUMN" property="reservationColumn"/>
+	    <result column="PAYMENT_OPTION" property="paymentOption"/>
+	    <result column="PAYMENT_COMPANY" property="paymentCompany"/>
+	    <result column="PAYMENT_CARDNO" property="paymentCardno"/>
+	    <result column="RESERVATION_STATUS" property="reservationStatus"/>
+	    <result column="RESERVATION_AT" property="reservationAt"/>
+	    <result column="PAYMENT_TOTAL_COST" property="paymentTotalCost"/>
+	    <association javaType="MovieDTO" property="movieDTO">
+	    	<id column="MOVIE_ID" property="movieId"/>
+	    	<result column="GENRE" property="genre"/>
+	    	<result column="TITLE" property="title"/>
+	    	<result column="DIRECTOR" property="director"/>
+	    	<result column="START_DATE" property="startDate"/>
+	    	<result column="RUNNINGTIME" property="runningtime"/>
+	    	<result column="PLOT" property="plot"/>
+	    	<result column="RATING" property="rating"/>
+	    	<result column="POSTER_PATH" property="posterPath"/>
+	    	<result column="POSTER_NAME" property="posterName"/>
+	    </association>
+	    <association javaType="ScreenDateDTO" property="screenDateDTO">
+	    	<id column="SCREEN_DATE_NO" property="screenDateNo"/>
+	    	<result column="SCREEN_DATE" property="screenDate"/>
+	    	<result column="SCREEN_TIME" property="screenTime"/>
+	    	<result column="DISCOUNT_PCT" property="discountPct"/>
+    		<association javaType="MovieDTO" property="movieDTO">
+		    	<id column="MOVIE_ID" property="movieId"/>
+		    	<result column="GENRE" property="genre"/>
+		    	<result column="TITLE" property="title"/>
+		    	<result column="DIRECTOR" property="director"/>
+		    	<result column="START_DATE" property="startDate"/>
+		    	<result column="RUNNINGTIME" property="runningtime"/>
+		    	<result column="PLOT" property="plot"/>
+		    	<result column="RATING" property="rating"/>
+		    	<result column="POSTER_PATH" property="posterPath"/>
+	    		<result column="POSTER_NAME" property="posterName"/>
+	    	</association>
+	    </association>
+ 	</resultMap>
+ 	
+  	<resultMap type="ScreenDateDTO" id="ScreenDateMap">
+	    <id column="SCREEN_DATE_NO" property="screenDateNo"/>
+	    <result column="SCREEN_DATE" property="screenDate"/>
+	    <result column="SCREEN_TIME" property="screenTime"/>
+	    <result column="DISCOUNT_PCT" property="discountPct"/>
+	    <association javaType="MovieDTO" property="movieDTO">
+	    	<id column="MOVIE_ID" property="movieId"/>
+	    	<result column="GENRE" property="genre"/>
+	    	<result column="TITLE" property="title"/>
+	    	<result column="DIRECTOR" property="director"/>
+	    	<result column="START_DATE" property="startDate"/>
+	    	<result column="RUNNINGTIME" property="runningtime"/>
+	    	<result column="PLOT" property="plot"/>
+	    	<result column="RATING" property="rating"/>
+	    	<result column="POSTER_PATH" property="posterPath"/>
+    		<result column="POSTER_NAME" property="posterName"/>
+    	</association>
+  	</resultMap>
+  	
+
+	<select id="getDate" resultType="String">
+	 SELECT DISTINCT SCREEN_DATE
+	   FROM SCREEN_DATE_T
+	  ORDER BY SCREEN_DATE
+	</select>
+
+	<!-- 영화목록 -->
+	<select id="getMovieList" resultType="MovieDTO">
+	 SELECT MOVIE_ID, GENRE, TITLE, DIRECTOR, START_DATE, RUNNINGTIME, PLOT, RATING, POSTER_PATH, POSTER_NAME
+	   FROM MOVIE_T
+	</select>
+	
+	<select id="getScreenDate" parameterType="String" resultMap="ScreenDateMap">
+	 SELECT SD.SCREEN_DATE, SD.SCREEN_TIME, M.TITLE
+	   FROM MOVIE_T M INNER JOIN SCREEN_DATE_T SD
+	     ON M.MOVIE_ID = SD.MOVIE_ID
+	  WHERE M.TITLE = #{title}
+	</select>
+	
+	<select id="searchScreenDateMovie" parameterType="String" resultMap="ScreenDateMap">
+		SELECT M.TITLE
+		  FROM MOVIE_T M INNER JOIN SCREEN_DATE_T SD
+		    ON M.MOVIE_ID = SD.MOVIE_ID
+		 WHERE SD.SCREEN_DATE = #{date}
+	</select>
+	
+	<select id="selectMovieByMovieAndTime" parameterType="ScreenDateDTO" resultMap="ScreenDateMap">
+		SELECT M.TITLE, M.MOVIE_ID, SD.SCREEN_DATE_NO, M.POSTER_PATH, M.POSTER_NAME, SD.DISCOUNT_PCT, SD.SCREEN_TIME
+		  FROM SCREEN_DATE_T SD INNER JOIN MOVIE_T M
+		    ON SD.MOVIE_ID = M.MOVIE_ID
+		 WHERE SD.SCREEN_DATE = #{screenDate} AND SD.SCREEN_TIME = #{screenTime}
+	</select>
+	
+	<select id="getSeats" parameterType="Map" resultMap="ReservationMap">
+		SELECT RESERVATION_ROW, RESERVATION_COLUMN
+		  FROM RESERVATION_T
+		 WHERE MOVIE_ID = #{movieId} AND SCREEN_DATE_NO = #{screenDateNo}
+	</select>
+	
+	<insert id="reservation" parameterType="ReservationDTO">
+		INSERT INTO RESERVATION_T
+			(RESERVATION_NO, USER_NO, SCREEN_DATE_NO, MOVIE_ID, RESERVATION_ROW, RESERVATION_COLUMN, PAYMENT_OPTION, PAYMENT_COMPANY, PAYMENT_CARDNO, RESERVATION_STATUS, RESERVATION_AT, PAYMENT_TOTAL_COST)
+		VALUES
+			(RESERVATION_SEQ.NEXTVAL, #{userNo}, #{screenDateDTO.screenDateNo}, #{movieDTO.movieId}, #{reservationRow}, #{reservationColumn}, #{paymentOption}, NULL, NULL, 1, SYSDATE, #{paymentTotalCost})
+	</insert>
+	
+</mapper>
