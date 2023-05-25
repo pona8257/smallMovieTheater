@@ -155,6 +155,15 @@
 	      alert('게시글 등록 실패');
 	  }
   }
+  function fnLogin(){
+	    location.href = '${contextPath}/user/login.form';
+  }
+  function fnJoin(){
+    location.href = '${contextPath}/user/join.form';
+  }
+  function fnLogout(){
+    location.href = '${contextPath}/user/logout.do';
+  }
   
 </script>
 <body>
@@ -164,10 +173,19 @@
     </a>
   </header>
   
-  <div class="login">
-    <button>회원가입</button>
-    <button>로그인</button>
-  </div>
+  <c:if test="${sessionScope.userId == null}">
+    <div class="login">
+      <input type="button" onclick="fnJoin()" value="회원가입">
+      <input type="button" onclick="fnLogin()" value="로그인">
+    </div>
+  </c:if>
+  
+  <c:if test="${sessionScope.userId != null}">
+      <div style="text-align: right;">
+        <a href="${contextPath}/user/mypage.do">${sessionScope.userId}</a>님 반갑습니다 ♥
+        <input type="button" onclick="fnLogout()" value="로그아웃">
+      </div>
+  </c:if>
    
   <nav>
     <ul class="gnb">
