@@ -150,9 +150,9 @@
   let deleteResult = '${deleteResult}';
   if(deleteResult != ''){
 	  if(deleteResult == '1'){
-		  alert('게시물 등록 성공');
+		  alert('게시물 삭제 성공');
 	  } else {
-	      alert('게시글 등록 실패');
+	      alert('게시글 삭제 실패');
 	  }
   }
   function fnLogin(){
@@ -211,10 +211,9 @@
   </div>
   
   <hr>
+  ${sessionScope.userId}
   <h2 style="text-align:left; margin-left:20px;">영화 한줄평 남기기</h2> 
     <form method="post" action="${contextPath}/movie/addMovieReview.do">
-      <input type="hidden" value="${movieDetail.movieId}" name="movieId">
-      <input type="hidden" value="${sessionScope.userId}" name="userId">
         <div class="coment_all">
           <div class="coment">
             <input type="text" class="input_content" placeholder="한줄평 남기기" name="reviewContent">
@@ -222,6 +221,8 @@
           <div class="rating">
             <input type="text" class="input_rating" placeholder="평점(5.0 만점)" name="reviewRating">
           </div>
+          <input type="hidden" value="${movieDetail.movieId}" name="movieId">
+          <input type="hidden" value="${sessionScope.userId}" name="userId">
           <div class="button">
             <button>등록</button>
           </div>

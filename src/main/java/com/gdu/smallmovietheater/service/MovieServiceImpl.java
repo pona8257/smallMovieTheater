@@ -64,12 +64,12 @@ public class MovieServiceImpl implements MovieService {
     
     int movieId =Integer.parseInt(request.getParameter("movieId"));
     String reviewContent = request.getParameter("reviewContent");
-    String userId = request.getParameter("userId");
+    //String userId = request.getParameter("userId");
     double reviewRating =Double.parseDouble(request.getParameter("reviewRating"));
+    
     
     MovieReivewDTO board = new MovieReivewDTO();
     board.setMovieId(movieId);
-    board.setUserId(userId);
     board.setReviewContent(reviewContent);
     board.setReviewRating(reviewRating);
     
