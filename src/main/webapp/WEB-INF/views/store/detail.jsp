@@ -62,28 +62,19 @@
 </style>
 <script>
 	
-	$('cart_label').on('click', function(ev){
-		if(${sessionScope.userId == null}){
-			if(confirm('로그인이 필요한 서비스입니다. \n 로그인창으로 이동하시겠습니까?')){
-				location.href = '${contextPath}/user/login.form';
-			}
-		}
-	})
+	function fnLogin(){
+		location.href = '${contextPath}/user/login.form';
+	}
 	
 	function fnStore(){
 		location.href = '${contextPath}/store/store.do';
 	}
 	
 	function fnInCart(){
-		
 		if(${sessionScope.userId == null}){
-			if(confirm('로그인이 필요한 서비스입니다. \n로그인창으로 이동하시겠습니까?')){
-				location.href = '${contextPath}/user/login.form';
-			} else {
-				location.href = '${contextPath}/store/store.do';
-			}
+			alert('로그인이 필요한 서비스입니다.')
+			location.href = '${contextPath}/user/login.form';
 		}
-		
 	}
 	
 </script>
@@ -97,7 +88,7 @@
   	</header>
   
 	  <div class="login">
-	    <button>로그인</button>
+	    <button onclick="fnLogin()">로그인</button>
 	  </div>
    
 	  <nav>
