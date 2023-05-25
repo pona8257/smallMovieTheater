@@ -5,6 +5,8 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.gdu.smallmovietheater.domain.CartDTO;
+import com.gdu.smallmovietheater.domain.OrderDTO;
+import com.gdu.smallmovietheater.domain.OrderDetailDTO;
 import com.gdu.smallmovietheater.domain.ProductDTO;
 
 @Mapper
@@ -21,4 +23,5 @@ public interface StoreMapper {
 	
 	// payment
 	public int insertOrder(int userNo);
+	public OrderDTO selectOrder();
 }
