@@ -48,7 +48,7 @@
 
 <h1 align="center"> * M Y P A G E * </h1>
 	<div class="">
-		<form action="/user/index.do" method="post">
+		<form action="/index.do" method="post">
 			<table>
 				
 
