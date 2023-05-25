@@ -18,6 +18,7 @@
 		<typeAlias alias="LeaveUserDTO"       type="com.gdu.smallmovietheater.domain.LeaveUserDTO" />
 		<typeAlias alias="MovieDTO"       type="com.gdu.smallmovietheater.domain.MovieDTO" />
 		<typeAlias alias="MovieReivewDTO"       type="com.gdu.smallmovietheater.domain.MovieReivewDTO" />
+		<typeAlias alias="MovieSearchDTO"       type="com.gdu.smallmovietheater.domain.MovieSearchDTO" />
 		<typeAlias alias="MovieStillCutDTO"       type="com.gdu.smallmovietheater.domain.MovieStillCutDTO" />
 		<typeAlias alias="NoticeDTO"       type="com.gdu.smallmovietheater.domain.NoticeDTO" />
 		<typeAlias alias="OrderDetailDTO"       type="com.gdu.smallmovietheater.domain.OrderDetailDTO" />

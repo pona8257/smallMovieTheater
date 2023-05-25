@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace는 @Mapper를 지정한다. -->
+<mapper namespace="com.gdu.smallmovietheater.mapper.MovieMapper">
+  
+	<select id="getMovieList" resultType="MovieDTO">
+	 SELECT MOVIE_ID, GENRE, TITLE, DIRECTOR, START_DATE, RUNNINGTIME, PLOT, RATING, POSTER_PATH, POSTER_NAME
+	   FROM MOVIE_T
+	</select>
+	
+	<select id="getMovieDetail" parameterType="int" resultType="MovieDTO">
+	 SELECT MOVIE_ID, GENRE, TITLE, DIRECTOR, START_DATE, RUNNINGTIME, PLOT, RATING, POSTER_PATH, POSTER_NAME
+     FROM MOVIE_T
+    WHERE MOVIE_ID = #{movieId}
+	</select>
+	
+	<select id="getgetRatingByMovieList" resultType="MovieDTO">
+   SELECT MOVIE_ID, GENRE, TITLE, DIRECTOR, START_DATE, RUNNINGTIME, PLOT, RATING, POSTER_PATH, POSTER_NAME
+     FROM MOVIE_T
+    ORDER BY RATING DESC
+	</select>
+	
+	<insert id="insertReview" parameterType="MovieReivewDTO">
+	 INSERT INTO MOVIE_REVIEW_T(
+	     MOVIE_ID
+	   , REVIEW_NO
+	   , REVIEW_CONTENT
+	   , REVIEW_RATING
+	   , REVIEW_DATE_AT
+	 ) VALUES (
+	     #{movieId}
+	   , MOVIE_REVIEW_SEQ.NEXTVAL
+	   , #{reviewContent}
+	   , #{reviewRating}
+	   , TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS')
+	 )
+	</insert>
+	<select id="getMovieReview" parameterType="int" resultType="MovieReivewDTO">
+	 SELECT MOVIE_ID, REVIEW_NO, REVIEW_CONTENT, REVIEW_RATING, REVIEW_DATE_AT
+	   FROM MOVIE_REVIEW_T
+	  WHERE MOVIE_ID = #{movieId}
+	</select>
+	
+	<select id="getMovieByColumn" parameterType="MovieSearchDTO" resultType="MovieDTO">
+	 SELECT MOVIE_ID, GENRE, TITLE, DIRECTOR, START_DATE, RUNNINGTIME, PLOT, RATING, POSTER_PATH, POSTER_NAME
+     FROM MOVIE_T
+    WHERE ${column} LIKE '%' || #{searchText} || '%'
+	</select>
+	
+	<delete id="deleteReviewByNo" parameterType="int">
+	 DELETE
+	   FROM MOVIE_REVIEW_T
+	  WHERE REVIEW_NO = #{reviewNo}
+	</delete>
+		
+</mapper>
