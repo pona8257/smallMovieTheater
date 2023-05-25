@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+	<!-- settings -->
+	<settings>
+		<setting name="mapUnderscoreToCamelCase" value="true" />
+	</settings>
+
+	<!-- typeAliases -->
+	<typeAliases>
+		<typeAlias alias="CartDTO"       type="com.gdu.smallmovietheater.domain.CartDTO" />
+		<typeAlias alias="CouponDTO"       type="com.gdu.smallmovietheater.domain.CouponDTO" />
+		<typeAlias alias="InquiryDTO"       type="com.gdu.smallmovietheater.domain.InquiryDTO" />
+		<typeAlias alias="LeaveUserDTO"       type="com.gdu.smallmovietheater.domain.LeaveUserDTO" />
+		<typeAlias alias="MovieDTO"       type="com.gdu.smallmovietheater.domain.MovieDTO" />
+		<typeAlias alias="MovieReivewDTO"       type="com.gdu.smallmovietheater.domain.MovieReivewDTO" />
+		<typeAlias alias="MovieStillCutDTO"       type="com.gdu.smallmovietheater.domain.MovieStillCutDTO" />
+		<typeAlias alias="NoticeDTO"       type="com.gdu.smallmovietheater.domain.NoticeDTO" />
+		<typeAlias alias="OrderDetailDTO"       type="com.gdu.smallmovietheater.domain.OrderDetailDTO" />
+		<typeAlias alias="OrderDTO"       type="com.gdu.smallmovietheater.domain.OrderDTO" />
+		<typeAlias alias="PaymentDTO"       type="com.gdu.smallmovietheater.domain.PaymentDTO" />
+		<typeAlias alias="ProductDTO"       type="com.gdu.smallmovietheater.domain.ProductDTO" />
+		<typeAlias alias="ReservationDTO"       type="com.gdu.smallmovietheater.domain.ReservationDTO" />
+		<typeAlias alias="ScreenDateDTO"       type="com.gdu.smallmovietheater.domain.ScreenDateDTO" />
+		<typeAlias alias="SleepUserDTO"       type="com.gdu.smallmovietheater.domain.SleepUserDTO" />
+		<typeAlias alias="UserAccessDTO"       type="com.gdu.smallmovietheater.domain.UserAccessDTO" />
+		<typeAlias alias="UserDTO"       type="com.gdu.smallmovietheater.domain.UserDTO" />
+		
+	</typeAliases>
+
+</configuration>
