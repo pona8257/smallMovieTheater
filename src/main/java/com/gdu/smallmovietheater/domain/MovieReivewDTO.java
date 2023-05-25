@@ -10,9 +10,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MovieReivewDTO {
   private int movieId;
+  private String userId;
   private int reviewNo;
   private String reviewContent;
   private double reviewRating;
   private String reviewDateAt;
-  private String userId;
 }
