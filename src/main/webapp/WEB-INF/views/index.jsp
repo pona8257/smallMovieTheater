@@ -105,8 +105,8 @@
   </c:if>
   
   <c:if test="${sessionScope.userId != null}">
-      <div>
-        <a href="${contextPath}/user/checkPw.form">${sessionScope.loginId}</a>님 반갑습니다 ♥
+      <div style="text-align: right;">
+        <a href="${contextPath}/user/mypage.do">${sessionScope.userId}</a>님 반갑습니다 ♥
       </div>
   </c:if>
    
