@@ -82,6 +82,7 @@
   }
         
 </style>
+
 <script>
   function fnLogin(){
 	  location.href = '${contextPath}/user/login.form';
@@ -92,6 +93,7 @@
   function fnLogout(){
 	  location.href = '${contextPath}/user/logout.do';
   }
+  
 </script>
 
 <body>
