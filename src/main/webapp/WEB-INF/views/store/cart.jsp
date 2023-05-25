@@ -86,7 +86,7 @@
 		IMP.init('imp34858868'); //portone 대신 자신의 "가맹점 식별코드"를 사용하시면 됩니다
 		IMP.request_pay({
 			merchant_uid : 'merchant_' + new Date().getTime(),
-			name : '결제테스트',
+			name : '(주)작은영화관',
 			amount : ${totalPrice},
 			buyer_email : 'cs@portone.io',
 			buyer_name : '구매자',
@@ -145,7 +145,6 @@
 	  </nav>
 	
 	<h1>장바구니</h1>
-	<h1>${carts[1].productDTO.imageName}</h1>
 	<div>
 		<form action="${contextPath}/store/remove.do" class="wrap" method="post" id="frm_remove">
 			<c:if test="${empty carts}">

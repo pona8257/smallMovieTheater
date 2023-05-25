@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import com.gdu.smallmovietheater.domain.CartDTO;
+import com.gdu.smallmovietheater.domain.OrderDTO;
+import com.gdu.smallmovietheater.domain.OrderDetailDTO;
 import com.gdu.smallmovietheater.domain.ProductDTO;
 import com.gdu.smallmovietheater.mapper.StoreMapper;
 
@@ -36,24 +38,26 @@ public class StoreServiceImpl implements StoreService {
 	
 	@Override
 	public int insertCart(HttpServletRequest request) {
+		
+		
 		HttpSession session = request.getSession();
 		String userId = (String)session.getAttribute("userId");
-		int count = Integer.parseInt(request.getParameter("count"));
-		CartDTO cartDTO = new CartDTO();
-		ProductDTO productDTO = new ProductDTO();
-		productDTO.setProductNo(Integer.parseInt(request.getParameter("productNo")));
-		cartDTO.setProductDTO(productDTO);
-		cartDTO.setCount(count);
-		cartDTO.setUserId(userId);
-		/*
-		HttpSession session = request.getSession();
-		String userId = (String)session.getAttribute("loginId");
-		cartDTO.setUserId(userId);
-		*/
+		if(userId != null) {
+			int count = Integer.parseInt(request.getParameter("count"));
+			CartDTO cartDTO = new CartDTO();
+			ProductDTO productDTO = new ProductDTO();
+			productDTO.setProductNo(Integer.parseInt(request.getParameter("productNo")));
+			cartDTO.setProductDTO(productDTO);
+			cartDTO.setCount(count);
+			cartDTO.setUserId(userId);
+			
+			int insertResult = storeMapper.insertCart(cartDTO);
+			return insertResult;
+			
+		} else {
+			return 0;
+		}
 		
-	
-		int insertResult = storeMapper.insertCart(cartDTO);
-		return insertResult;
 	}
 	
 	@Override
@@ -106,11 +110,40 @@ public class StoreServiceImpl implements StoreService {
 	}
 	
 	
-	public int insertOrder(HttpServletRequest request) {
+	public int insertOrder(HttpServletRequest request, Model model) {
+		
+		HttpSession session = request.getSession();
+		int userNo = (int)session.getAttribute("userNo");
+		String userId = (String)session.getAttribute("userId");
+		
+		int insertResult = storeMapper.insertOrder(userNo);
 		
 		
+		if(insertResult != 0) {
+			OrderDTO orderDTO = storeMapper.selectOrder();
+			List<CartDTO> carts = storeMapper.selectCartList(userId);
+			int totalPrice = 0;
+			int totalCount = 0;
+			OrderDetailDTO orderDetailDTO = new OrderDetailDTO();
+			orderDetailDTO.setOrderDTO(orderDTO);
+			CartDTO cartDTO = new CartDTO();
+			ProductDTO productDTO = new ProductDTO();
+			
+			for(int i = 0; i < carts.size(); i++) {
+				cartDTO.setCount(carts.get(i).getCount());
+				productDTO.setProductNo(carts.get(i).getProductDTO().getProductNo());
+				orderDetailDTO.setCartDTO(cartDTO);
+				orderDetailDTO.setProductDTO(productDTO);
+				for(int y = 0; y < carts.get(i).getCount(); y++) {
+					totalPrice += carts.get(i).getProductDTO().getPrice();
+					totalCount++;
+				}
+			}
+			model.addAttribute("totalPrice", totalPrice);
+			model.addAttribute("cartsCount", totalCount);
+		}
 		
-		return 0;
+		return insertResult;
 	}
 	
 	

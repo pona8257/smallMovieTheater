@@ -50,14 +50,12 @@ public class StoreContoller {
 	
 	@GetMapping("/paymentDetail.do")
 	public String payment(HttpServletRequest request, Model model) {
-		
+		storeService.insertOrder(request, model);
 		return "store/payment";
 	}
 	
 	@PostMapping("/remove.do")
 	public void remove(HttpServletRequest request, HttpServletResponse response) {
-		
-		
 		
 		storeService.removeCart(request, response);
 		

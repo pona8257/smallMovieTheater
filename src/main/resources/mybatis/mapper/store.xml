@@ -21,6 +21,27 @@
 		</association>
 	</resultMap>
 	
+	<resultMap type="OrderDetailDTO" id="OrderDetailMap">
+		<id column="ORDER_DETAIL_NO" property="orderDetailNo" />
+		<association javaType="OrderDTO" property="orderDTO">
+			<id column="ORDER_NO" property="orderNo" />
+			<result column="ORDER_DATE" property="orderDate" />
+		</association>
+		<association javaType="CartDTO" property="cartDTO">
+			<id column="CART_NO" property="cartNo" />
+			<result column="COUNT" property="count" />
+			<result column="USER_ID" property="userId" />
+			<association javaType="ProductDTO" property="productDTO">
+			<id column="PRODUCT_NO" property="productNo" />
+			<result column="PRODUCT_NAME" property="productName" />
+			<result column="PRICE" property="price"/>
+			<result column="IMAGE_NAME" property="imageName"/>
+			
+			</association>
+		</association>			
+			
+	</resultMap>
+	
 	<!-- Product mapper -->
 	<select id="productList" resultType="ProductDTO">
 		SELECT PRODUCT_NO, PRODUCT_NAME, PRICE, PRODUCT_CONTENT, REGISTRATION, COUNT, REMOVES, IMAGE_PATH, IMAGE_NAME
@@ -51,11 +72,6 @@
 		 WHERE USER_ID = #{userId}
 	</select>
 	
-	<update id="updateCart" parameterType="int">
-		UPDATE PRODUCT_T
-		   SET COUNT = COUNT - ${count}
-		 WHERE PRODUCT_NO = #{productNo}
-	</update>
 	
 	<delete id="deleteCart" parameterType="List">
 		DELETE
@@ -78,6 +94,11 @@
 		SELECT ORDER_NO, USER_NO, ORDER_DATE
 		  FROM ORDER_T
 	</select>
+	
+	<insert id="insertOrderDetail" parameterType="">
+		INSERT INTO ORDER_DETAIL_T
+		  VALUES (ORDER_DETAIL_SEQ.NEXTVAR, #{productDTO.productNo}, #{orderDTO.orderNo}, #{cartDTO.cartNo}, null)
+	</insert>
 	
 	
 </mapper>

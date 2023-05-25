@@ -60,6 +60,13 @@
   
 </style>
 	
+<script>
+	
+	function fnList(){
+		location.href = '${contextPath}/store/store.do';
+	}
+	
+</script>
 
 </head>
 <body>
@@ -68,6 +75,17 @@
 		<h1>결제가 완료되었습니다.</h1>
 	</div>
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div>
+		<input type="button" value="홈 화면" onclick="fnList()">
+	</div>
 	
 
 </body>
