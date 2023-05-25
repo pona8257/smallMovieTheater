@@ -215,6 +215,7 @@
   <h2 style="text-align:left; margin-left:20px;">영화 한줄평 남기기</h2> 
     <form method="post" action="${contextPath}/movie/addMovieReview.do">
       <input type="hidden" value="${movieDetail.movieId}" name="movieId">
+      <input type="hidden" value="${sessionScope.userId}" name="userId">
         <div class="coment_all">
           <div class="coment">
             <input type="text" class="input_content" placeholder="한줄평 남기기" name="reviewContent">

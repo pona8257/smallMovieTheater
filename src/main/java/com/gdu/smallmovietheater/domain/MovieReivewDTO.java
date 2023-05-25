@@ -14,4 +14,5 @@ public class MovieReivewDTO {
   private String reviewContent;
   private double reviewRating;
   private String reviewDateAt;
+  private String userId;
 }
