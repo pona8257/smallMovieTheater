@@ -17,7 +17,7 @@
 			<result column="REGISTRATION" property="registration"/>
 			<result column="COUNT" property="count"/>
 			<result column="REMOVES" property="removes"/>
-			<result column="IMAGE" property="image"/>
+			<result column="IMAGE_NAME" property="imageName"/>
 		</association>
 	</resultMap>
 	

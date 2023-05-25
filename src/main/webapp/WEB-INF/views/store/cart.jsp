@@ -145,6 +145,7 @@
 	  </nav>
 	
 	<h1>장바구니</h1>
+	<h1>${carts[1].productDTO.imageName}</h1>
 	<div>
 		<form action="${contextPath}/store/remove.do" class="wrap" method="post" id="frm_remove">
 			<c:if test="${empty carts}">
@@ -168,9 +169,9 @@
 				</thead>
 				<c:forEach items="${carts}" var="cart" varStatus="i">
 					<tr>
-						<td>${i.index + 1}  <input type="checkbox" value="${cart.cartNo}" name="cartNo" class="chk_one"></td>
+						<td width="70px">${i.index + 1}  <input type="checkbox" value="${cart.cartNo}" name="cartNo" class="chk_one"></td>
 							
-						<td><img src="${contextPath}/resources/img/${cart.productDTO.imageName}.jpg"></td>
+						<td width="100px"><img src="${contextPath}/resources/img/${cart.productDTO.imageName}.jpg" style="width: 100px;" ></td>
 						<td>
 							${cart.productDTO.productName }
 							${cart.productDTO.price }원
@@ -180,8 +181,8 @@
 					</tr>
 				</c:forEach>
 					<tr>
-						<td colspan="3">총 상품 수 : ${cartsCount }</td>
-						<td colspan="3">총 결제금액 : ${totalPrice }</td>
+						<td colspan="2">총 상품 수 : ${cartsCount }</td>
+						<td colspan="4">총 결제금액 : ${totalPrice }</td>
 					</tr>
 				</table>
 				<button>장바구니에서 빼기</button>
