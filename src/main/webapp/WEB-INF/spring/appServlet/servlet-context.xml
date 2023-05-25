@@ -23,35 +23,35 @@
 	
 	<context:component-scan base-package="com.gdu.smallmovietheater" />
 	
-	<!--
+	
   <interceptors>
   
     <interceptor>
       <mapping path="/user/logout.do" />
       <mapping path="/user/leave.do" />
-      <beans:bean class="com.gdu.app12.intercept.LoginCheckInterceptor" />
+      <beans:bean class="com.gdu.smallmovietheater.intercept.LoginCheckInterceptor" />
     </interceptor>
     
     <interceptor>
       <mapping path="/user/login.form" />
       <mapping path="/user/agree.form" />
       <mapping path="/user/join.form" />
-      <beans:bean class="com.gdu.app12.intercept.PreventLoginInterceptor" />
+      <beans:bean class="com.gdu.smallmovietheater.intercept.PreventLoginInterceptor" />
     </interceptor>
     
     <interceptor>
       <mapping path="/user/login.do" />
-      <beans:bean class="com.gdu.app12.intercept.SleepUserCheckInterceptor" />
+      <beans:bean class="com.gdu.smallmovietheater.intercept.SleepUserCheckInterceptor" />
     </interceptor>
     
     <interceptor>
       <mapping path="/**" />
-      <beans:bean class="com.gdu.app12.intercept.AutologinIntercepter" />
+      <beans:bean class="com.gdu.smallmovietheater.intercept.AutologinIntercepter" />
     </interceptor>
     
   </interceptors>
 
--->
+
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
   <resources mapping="/resources/**" location="/resources/" />
 	

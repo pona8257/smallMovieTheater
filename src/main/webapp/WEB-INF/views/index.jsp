@@ -97,11 +97,18 @@
       <strong>작은영화관</strong>
     </a>
   </header>
+  <c:if test="${sessionScope.loginId == null}">
+    <div class="login">
+      <input type="button" onclick="fnJoin()" value="회원가입">
+      <input type="button" onclick="fnLogin()" value="로그인">
+    </div>
+  </c:if>
   
-  <div class="login">
-    <input type="button" onclick="fnJoin()" value="회원가입">
-    <input type="button" onclick="fnLogin()" value="로그인">
-  </div>
+  <c:if test="${sessionScope.loginId != null}">
+      <div>
+        <a href="${contextPath}/user/checkPw.form">${sessionScope.loginId}</a>님 반갑습니다 ♥
+      </div>
+  </c:if>
    
   <nav>
     <ul class="gnb">
