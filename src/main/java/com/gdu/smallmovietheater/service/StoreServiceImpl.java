@@ -102,4 +102,22 @@ public class StoreServiceImpl implements StoreService {
 		}
 	}
 	
+	
+	public int insertOrder() {
+		
+		
+		storeMapper.insertOrder(null);
+		
+		return 0;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

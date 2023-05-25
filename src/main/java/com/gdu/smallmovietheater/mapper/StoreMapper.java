@@ -18,4 +18,7 @@ public interface StoreMapper {
 	public List<CartDTO> selectCartList();
 	public int updateCart(CartDTO cartDTO);
 	public int deleteCart(List<String> cartNo);
+	
+	// payment
+	public int insertOrder(String userId);
 }

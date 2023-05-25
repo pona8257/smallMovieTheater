@@ -126,7 +126,7 @@
 	<div class="productList">
 		<c:forEach items="${products }" var="product" end="3">
 			<div class="product">
-				<a id="img" href="${contextPath }/store/detail.do?productNo=${product.productNo}"><img src="${contextPath}/resources/images/${product.imageName}.jpg"></a>
+				<a id="img" href="${contextPath }/store/detail.do?productNo=${product.productNo}"><img src="${contextPath}/resources/img/${product.imageName}.jpg"></a>
 				<div>${product.productName}</div>
 				<div>${product.price}</div>
 			</div>
@@ -140,7 +140,7 @@
 		<c:forEach items="${products }" var="product" begin="4" end="5">
 			<div class="product">
 				<a id="img" href="${contextPath }/store/detail.do?productNo=${product.productNo}">
-					<img src="${contextPath}/resources/images/${product.imageName}.jpg">
+					<img src="${contextPath}/resources/img/${product.imageName}.jpg">
 				</a>
 				<div>${product.productName}</div>
 				<div>${product.price}</div>
@@ -154,7 +154,7 @@
 	<div class="productList">
 		<c:forEach items="${products }" var="product" begin="6" end="7">
 			<div class="product">
-				<a id="img" href="${contextPath }/store/detail.do?productNo=${product.productNo}"><img src="${contextPath}/resources/images/${product.imageName}.jpg"></a>
+				<a id="img" href="${contextPath }/store/detail.do?productNo=${product.productNo}"><img src="${contextPath}/resources/img/${product.imageName}.jpg"></a>
 				<div>${product.productName}</div>
 				<div>${product.price}</div>
 			</div>

@@ -87,7 +87,7 @@
 		IMP.request_pay({
 			merchant_uid : 'merchant_' + new Date().getTime(),
 			name : '결제테스트',
-			amount : 14000,
+			amount : ${totalPrice},
 			buyer_email : 'cs@portone.io',
 			buyer_name : '구매자',
 			buyer_tel : '010-1234-5678',
