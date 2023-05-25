@@ -82,6 +82,14 @@
   }
         
 </style>
+<script>
+  function fnLogin(){
+	  location.href = '${contextPath}/user/login.form';
+  }
+  function fnJoin(){
+	  location.href = '${contextPath}/user/join.form';
+  }
+</script>
 
 <body>
   <header>
@@ -91,8 +99,8 @@
   </header>
   
   <div class="login">
-    <button>회원가입</button>
-    <button>로그인</button>
+    <input type="button" onclick="fnJoin()" value="회원가입">
+    <input type="button" onclick="fnLogin()" value="로그인">
   </div>
    
   <nav>
@@ -117,6 +125,7 @@
           <a href="${contextPath}/movie/movieDetail.do?movieId=${movie.movieId}">
             <img src="${contextPath}/resources/img/${movie.posterName}">
           </a>
+          ${movie.posterName}
         <div>
           <a href="${contextPath}/movie/movieDetail.do?movieId=${movie.movieId}" style="font-weight:bold">${movie.title}</a>
         </div>
