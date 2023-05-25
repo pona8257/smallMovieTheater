@@ -68,10 +68,15 @@
 	
 	
 	<!-- 결제 -->
-	<insert id="insertOrder" parameterType="String">
+	<insert id="insertOrder" parameterType="int">
 		INSERT INTO ORDER_T
-			VALUES (ORDER_SEQ.NEXTVAL, ${userId}, TO_CHAR(SYSDATE, 'YYMMDD'))
+			VALUES (ORDER_SEQ.NEXTVAL, ${userNo}, TO_CHAR(SYSDATE, 'YYMMDD'))
 	</insert>
+	
+	<select id="selectOrder" resultType="orderDTO">
+		SELECT ORDER_NO, USER_NO, ORDER_DATE
+		  FROM ORDER_T
+	</select>
 	
 	
 </mapper>

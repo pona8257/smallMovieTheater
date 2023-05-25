@@ -99,7 +99,7 @@
 	<form id="cart_Add" action="${contextPath }/store/cart.do" method="post">
 		<table border="1">
 			<tr>
-				<td rowspan="4"><img src="${contextPath}/resources/images/${product.imageName}.jpg"> </td>
+				<td rowspan="4"><img src="${contextPath}/resources/img/${product.imageName}.jpg"> </td>
 				<td>상품명</td>
 				<td>${product.productName}</td>
 			</tr>

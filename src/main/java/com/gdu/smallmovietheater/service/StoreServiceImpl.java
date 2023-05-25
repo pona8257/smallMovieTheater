@@ -105,8 +105,10 @@ public class StoreServiceImpl implements StoreService {
 	
 	public int insertOrder() {
 		
+		int userNo = 1;
+		storeMapper.insertOrder(userNo);
 		
-		storeMapper.insertOrder(null);
+		
 		
 		return 0;
 	}

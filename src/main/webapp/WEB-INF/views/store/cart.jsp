@@ -174,7 +174,7 @@
 					<tr>
 						<td>${i.index + 1}  <input type="checkbox" value="${cart.cartNo}" name="cartNo" class="chk_one"></td>
 							
-						<td><img src="${contextPath}/resources/images/${cart.productDTO.imageName}.jpg"></td>
+						<td><img src="${contextPath}/resources/img/${cart.productDTO.imageName}.jpg"></td>
 						<td>
 							${cart.productDTO.productName }
 							${cart.productDTO.price }원

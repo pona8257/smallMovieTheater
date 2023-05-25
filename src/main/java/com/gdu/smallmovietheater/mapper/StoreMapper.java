@@ -20,5 +20,5 @@ public interface StoreMapper {
 	public int deleteCart(List<String> cartNo);
 	
 	// payment
-	public int insertOrder(String userId);
+	public int insertOrder(int userNo);
 }
