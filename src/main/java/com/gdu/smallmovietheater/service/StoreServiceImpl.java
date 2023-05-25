@@ -36,12 +36,15 @@ public class StoreServiceImpl implements StoreService {
 	
 	@Override
 	public int insertCart(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		String userId = (String)session.getAttribute("userId");
 		int count = Integer.parseInt(request.getParameter("count"));
 		CartDTO cartDTO = new CartDTO();
 		ProductDTO productDTO = new ProductDTO();
 		productDTO.setProductNo(Integer.parseInt(request.getParameter("productNo")));
 		cartDTO.setProductDTO(productDTO);
 		cartDTO.setCount(count);
+		cartDTO.setUserId(userId);
 		/*
 		HttpSession session = request.getSession();
 		String userId = (String)session.getAttribute("loginId");
@@ -57,10 +60,10 @@ public class StoreServiceImpl implements StoreService {
 	public List<CartDTO> selectCartList(HttpServletRequest request, Model model) {
 		
 		HttpSession session = request.getSession();
-		int userNo = (int)session.getAttribute("userNo");
+		String userId = (String)session.getAttribute("userId");
 		
 		
-		List<CartDTO> carts = storeMapper.selectCartList(userNo);
+		List<CartDTO> carts = storeMapper.selectCartList(userId);
 		int totalPrice = 0;
 		int totalCount = 0;
 		for(int i = 0; i < carts.size(); i++) {

@@ -134,10 +134,6 @@
 	      <strong>작은영화관</strong>
 	    </a>
   	</header>
-  
-	  <div class="login">
-	    <button>로그인</button>
-	  </div>
    
 	  <nav>
 	    <ul class="gnb">
@@ -147,7 +143,7 @@
 	      <li><a href="${contextPath}/movie/reserve.form">예매</a></li>
 	    </ul>
 	  </nav>
-
+	
 	<h1>장바구니</h1>
 	<div>
 		<form action="${contextPath}/store/remove.do" class="wrap" method="post" id="frm_remove">
