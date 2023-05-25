@@ -97,16 +97,16 @@
       <strong>작은영화관</strong>
     </a>
   </header>
-  <c:if test="${sessionScope.loginId == null}">
+  <c:if test="${sessionScope.userId == null}">
     <div class="login">
       <input type="button" onclick="fnJoin()" value="회원가입">
       <input type="button" onclick="fnLogin()" value="로그인">
     </div>
   </c:if>
   
-  <c:if test="${sessionScope.loginId != null}">
-      <div>
-        <a href="${contextPath}/user/checkPw.form">${sessionScope.loginId}</a>님 반갑습니다 ♥
+  <c:if test="${sessionScope.userId != null}">
+      <div style="text-align: right;">
+        <a href="${contextPath}/user/mypage.do">${sessionScope.userId}</a>님 반갑습니다 ♥
       </div>
   </c:if>
    
@@ -132,7 +132,6 @@
           <a href="${contextPath}/movie/movieDetail.do?movieId=${movie.movieId}">
             <img src="${contextPath}/resources/img/${movie.posterName}">
           </a>
-          ${movie.posterName}
         <div>
           <a href="${contextPath}/movie/movieDetail.do?movieId=${movie.movieId}" style="font-weight:bold">${movie.title}</a>
         </div>
