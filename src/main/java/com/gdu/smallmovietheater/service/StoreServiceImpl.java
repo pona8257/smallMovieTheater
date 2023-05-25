@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import com.gdu.smallmovietheater.domain.CartDTO;
-import com.gdu.smallmovietheater.domain.OrderDTO;
 import com.gdu.smallmovietheater.domain.ProductDTO;
 import com.gdu.smallmovietheater.mapper.StoreMapper;
 
@@ -63,7 +62,6 @@ public class StoreServiceImpl implements StoreService {
 		HttpSession session = request.getSession();
 		String userId = (String)session.getAttribute("userId");
 		
-		
 		List<CartDTO> carts = storeMapper.selectCartList(userId);
 		int totalPrice = 0;
 		int totalCount = 0;
@@ -110,11 +108,7 @@ public class StoreServiceImpl implements StoreService {
 	
 	public int insertOrder(HttpServletRequest request) {
 		
-		HttpSession session = request.getSession();
-		int userNo = (int)session.getAttribute("userNo");
-		storeMapper.insertOrder(userNo);
 		
-		OrderDTO orderDTO = storeMapper.selectOrder();
 		
 		return 0;
 	}
