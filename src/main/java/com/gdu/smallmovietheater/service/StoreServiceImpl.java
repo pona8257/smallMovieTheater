@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,12 +55,12 @@ public class StoreServiceImpl implements StoreService {
 	
 	@Override
 	public List<CartDTO> selectCartList(HttpServletRequest request, Model model) {
-		/*
-		HttpSession session = request.getSession();
-		String loginId = (String)session.getAttribute("loginId");
-		*/
 		
-		List<CartDTO> carts = storeMapper.selectCartList();
+		HttpSession session = request.getSession();
+		int userNo = (int)session.getAttribute("userNo");
+		
+		
+		List<CartDTO> carts = storeMapper.selectCartList(userNo);
 		int totalPrice = 0;
 		int totalCount = 0;
 		for(int i = 0; i < carts.size(); i++) {

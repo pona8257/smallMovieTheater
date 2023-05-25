@@ -41,10 +41,10 @@
 	<!-- Cart mapper -->
 	<insert id="insertCart" parameterType="CartDTO">
 		INSERT INTO CART_T(CART_NO, PRODUCT_NO, COUNT, USER_ID)
-			VALUES(CART_SEQ.NEXTVAL, #{productDTO.productNo}, #{count}, 'WQQW')
+			VALUES(CART_SEQ.NEXTVAL, #{productDTO.productNo}, #{count}, 'qwe')
 	</insert>
 	
-	<select id="selectCartList"  resultMap="CartMap">
+	<select id="selectCartList"  resultMap="CartMap" parameterType="int">
 		SELECT C.CART_NO, C.USER_ID, P.PRODUCT_NAME, P.PRICE, P.PRODUCT_CONTENT, C.COUNT, P.IMAGE_NAME
 		  FROM PRODUCT_T P INNER JOIN CART_T C
 		    ON P.PRODUCT_NO = C.PRODUCT_NO
