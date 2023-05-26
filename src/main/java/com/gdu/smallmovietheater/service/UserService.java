@@ -23,4 +23,5 @@ public interface UserService {
 	  public boolean checkPw(String userId, String userPassword);
 	  public UserDTO getUserById(String userId);
 	  public void mypage(HttpServletRequest request, HttpServletResponse response);
+	  public Map<String, Object> findUser(UserDTO userDTO);
 }

@@ -25,7 +25,7 @@
   </select>
 
   <select id="selectUserByEmail" parameterType="String" resultType="UserDTO">
-    SELECT USER_EMAIL
+    SELECT USER_EMAIL, USER_ID, JOINED_AT
       FROM USER_T
      WHERE USER_EMAIL = #{userEmail}
   </select>
