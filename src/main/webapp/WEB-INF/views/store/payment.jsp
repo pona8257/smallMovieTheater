@@ -113,24 +113,24 @@
 		<h1>결제가 완료되었습니다.</h1>
 	</div>
 	
-	<div>
-		<table>
+	<div style="margin: 0px 20px 0px 20px;">
+		<table border="1" style="width: 100%;">
 			<thead>
 				<tr>
-					<td>주문번호 </td>
-					<td>주문날짜</td>	
-					<td>사진</td>
-					<td>제품명 </td>	
-					<td>수량 </td>
-					<td>제품가격</td>		
+					<td width="10%">주문번호 </td>
+					<td width="10%">주문날짜</td>	
+					<td width="10%">사진</td>
+					<td width="50%">제품명 </td>	
+					<td width="10%">수량 </td>
+					<td width="10%">제품가격</td>		
 				</tr>
 			</thead>
 				
-			<tbody class="wrap">
+			<tbody>
 				<c:forEach items="${carts}" var="cart" varStatus="i">
 						<tr>
 							<td width="70px">${i.index + 1}</td>
-							<td>${orderDTO.orderDate }</td>
+							<td>${orders[i.index].orderDate}</td>
 							<td width="100px"><img src="${contextPath}/resources/img/${cart.productDTO.imageName}.jpg" style="width: 100px;" ></td>
 							<td>${cart.productDTO.productName }</td>
 							<td>${cart.count }개</td>
@@ -138,17 +138,16 @@
 						</tr>
 					</c:forEach>
 					<tr>
-						<td>총 결제금액 ${totalPrice }</td>
+						<td colspan="6">총 결제금액 ${totalPrice }</td>
 					</tr>
 			</tbody>
 		</table>
-	</div>
-	
-	
-	
-	<div>
 		<input type="button" value="홈 화면" onclick="fnList()">
 	</div>
+	
+	
+	
+	
 	
 
 </body>

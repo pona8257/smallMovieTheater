@@ -194,7 +194,9 @@
 						<td>${cart.productDTO.productName }</td>
 						<td>${cart.productDTO.price }원</td>
 						<td>${cart.productDTO.productContent } </td>
-						<td>${cart.count } 개 </td>
+						<td>${cart.count } 개 
+							<label for=""></label>
+						</td>
 					</tr>
 				</c:forEach>
 					<tr>
