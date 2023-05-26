@@ -87,8 +87,8 @@
   function fnLogin(){
 	  location.href = '${contextPath}/user/login.form';
   }
-  function fnJoin(){
-	  location.href = '${contextPath}/user/join.form';
+  function fnAgree(){
+	  location.href = '${contextPath}/user/agree.form';
   }
   function fnLogout(){
 	  location.href = '${contextPath}/user/logout.do';
@@ -104,7 +104,7 @@
   </header>
   <c:if test="${sessionScope.userId == null}">
     <div class="login">
-      <input type="button" onclick="fnJoin()" value="회원가입">
+      <input type="button" onclick="fnAgree()" value="회원가입">
       <input type="button" onclick="fnLogin()" value="로그인">
     </div>
   </c:if>
