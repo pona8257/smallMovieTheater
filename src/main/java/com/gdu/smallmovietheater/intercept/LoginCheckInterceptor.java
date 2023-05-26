@@ -21,7 +21,7 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
     HttpSession session = request.getSession();
     
     // 로그인 여부 확인
-    if(session != null && session.getAttribute("loginId") == null) {
+    if(session != null && session.getAttribute("userId") == null) {
       
       // 응답
       response.setContentType("text/html; charset=UTF-8");

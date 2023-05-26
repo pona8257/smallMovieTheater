@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.gdu.smallmovietheater.domain.LeaveUserDTO;
 import com.gdu.smallmovietheater.domain.UserDTO;
 import com.gdu.smallmovietheater.mapper.UserMapper;
 import com.gdu.smallmovietheater.util.JavaMailUtil;
@@ -133,7 +135,7 @@ public class UserServiceImpl implements UserService {
 	      out.println("<script>");
 	      if(joinResult == 1) {
 	        out.println("alert('회원 가입되었습니다.');");
-	        out.println("location.href='" + request.getContextPath() + "/';");
+	        out.println("location.href='" + request.getContextPath() + "/index.do';");
 	      } else {
 	        out.println("alert('회원 가입에 실패했습니다.');");
 	        out.println("history.go(-2);");
@@ -204,7 +206,7 @@ public class UserServiceImpl implements UserService {
 	        PrintWriter out = response.getWriter();
 	        out.println("<script>");
 	        out.println("alert('일치하는 회원 정보가 없습니다.');");
-	        out.println("location.href='" + request.getContextPath() + "/index.do';");
+	        out.println("location.href='" + request.getContextPath() + "/';");
 	        out.println("</script>");
 	        out.flush();
 	        out.close();
@@ -286,11 +288,53 @@ public class UserServiceImpl implements UserService {
 	    
 	  }
 
+	@Transactional(readOnly=true)
 	@Override
 	public void leave(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
-
-	}
+		// 탈퇴할 회원의 ID는 session에 loginId 속성으로 저장되어 있다.
+	    HttpSession session = request.getSession();
+	    String userId = (String) session.getAttribute("userId");
+	    
+	    // 탈퇴할 회원의 정보(ID, EMAIL, JOINED_AT) 가져오기
+	    UserDTO userDTO = userMapper.selectUserById(userId);
+	    
+	    // LeaveUserDTO 만들기
+	    LeaveUserDTO leaveUserDTO = new LeaveUserDTO();
+	    leaveUserDTO.setUserId(userId);
+	    leaveUserDTO.setUserEmail(userDTO.getUserEmail());
+	    leaveUserDTO.setJoinedAt(userDTO.getJoinedAt());
+	    
+	    // 회원 탈퇴하기
+	    int insertResult = userMapper.insertLeaveUser(leaveUserDTO);
+	    int deleteResult = userMapper.deleteUser(userId);
+	    
+	    // 응답
+	    try {
+	      
+	      response.setContentType("text/html; charset=UTF-8");
+	      PrintWriter out = response.getWriter();
+	      out.println("<script>");
+	      if(insertResult == 1 && deleteResult == 1) {
+	        
+	        // session 초기화
+	        session.invalidate();
+	        
+	        out.println("alert('회원 탈퇴되었습니다.');");
+	        out.println("location.href='" + request.getContextPath() + "/index.do';");
+	        
+	      } else {
+	        out.println("alert('회원 탈퇴에 실패했습니다.');");
+	        out.println("history.back();");
+	      }
+	      out.println("</script>");
+	      out.flush();
+	      out.close();
+	      
+	    } catch (Exception e) {
+	      e.printStackTrace();
+	    }
+	    
+	  }
 
 	@Override
 	public void mypage(HttpServletRequest request, HttpServletResponse response) {

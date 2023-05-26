@@ -1,5 +1,6 @@
 package com.gdu.smallmovietheater.controller;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -90,5 +91,24 @@ public class UserController {
 	  public String findIdForm() {
 	    return "user/findId";
 	  }
+	@GetMapping("/findPw.form") // 비밀번호 찾기 화면으로 이동
+		public String findPwForm() {
+		return "user/findPw";
+	}
+	
+	@GetMapping("/checkPw.form")  // 마이페이지 직전 비밀번호 확인 화면으로 이동
+	  public String checkPwForm() {
+	    return "user/checkPw";
+	  }
+	
+	@ResponseBody
+	  @PostMapping(value="/checkPw.do", produces="application/json")  // 사용자가 입력한 비밀번호가 맞는지 확인
+	  public Map<String, Object> checkPw(@RequestParam("userId") String userId
+	                                   , @RequestParam("userPassword") String userPassword) {
+	    Map<String, Object> map = new HashMap<String, Object>();
+	    map.put("isCorrect", userService.checkPw(userId, userPassword));
+	    return map;
+	  }
+	
 	
 }
