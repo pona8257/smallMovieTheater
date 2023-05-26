@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -66,10 +67,12 @@ public class MovieServiceImpl implements MovieService {
     String reviewContent = request.getParameter("reviewContent");
     //String userId = request.getParameter("userId");
     double reviewRating =Double.parseDouble(request.getParameter("reviewRating"));
-    
+    HttpSession session = request.getSession();
+    String userId = (String)session.getAttribute("userId");
     
     MovieReivewDTO board = new MovieReivewDTO();
     board.setMovieId(movieId);
+    board.setUserId(userId);
     board.setReviewContent(reviewContent);
     board.setReviewRating(reviewRating);
     

@@ -211,7 +211,6 @@
   </div>
   
   <hr>
-  ${sessionScope.userId}
   <h2 style="text-align:left; margin-left:20px;">영화 한줄평 남기기</h2> 
     <form method="post" action="${contextPath}/movie/addMovieReview.do">
         <div class="coment_all">
@@ -222,10 +221,13 @@
             <input type="text" class="input_rating" placeholder="평점(5.0 만점)" name="reviewRating">
           </div>
           <input type="hidden" value="${movieDetail.movieId}" name="movieId">
-          <input type="hidden" value="${sessionScope.userId}" name="userId">
-          <div class="button">
-            <button>등록</button>
-          </div>
+          <c:if test="${sessionScope.userId ne null}">
+            <div class="button">
+              <button>등록</button>
+            </div>
+          </c:if>
+          <c:if test="${sessionScope.userId eq null}">
+          </c:if>
         </div>
     </form>
     
@@ -245,12 +247,14 @@
       <c:forEach items="${movieReviewList}" var="movieReview" varStatus="i">
        <form method="post" action="${contextPath}/movie/deleteMovieReview.do">
          <div class="movie_review">
-          <div style="width:10%;">${i.index + 1}</div>
+          <div style="width:10%;">${i.index + 1} </div>
           <div style="width:20%;">${movieReview.reviewRating}</div>
           <div style="width:50%;">${movieReview.reviewContent}</div>
           <input type="hidden" value="${movieReview.reviewNo}" name="reviewNo">
-          <input type="hidden" value="${movieReview.movieId}" name="movieId">
-          <div style="width:20%;"><button>삭제</button></div>
+          <input type="hidden" value="${movieDetail.movieId}" name="movieId">
+          <c:if test="${movieReview.userId == sessionScope.userId}">
+            <div style="width:20%;"><button>삭제</button></div>
+          </c:if>
          </div>
        </form>
       </c:forEach>

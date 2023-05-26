@@ -26,12 +26,14 @@
 	<insert id="insertReview" parameterType="MovieReivewDTO">
 	 INSERT INTO MOVIE_REVIEW_T(
 	     MOVIE_ID
+	   , USER_ID
 	   , REVIEW_NO
 	   , REVIEW_CONTENT
 	   , REVIEW_RATING
 	   , REVIEW_DATE_AT
 	 ) VALUES (
 	     #{movieId}
+	   , #{userId}
 	   , MOVIE_REVIEW_SEQ.NEXTVAL
 	   , #{reviewContent}
 	   , #{reviewRating}
@@ -39,7 +41,7 @@
 	 )
 	</insert>
 	<select id="getMovieReview" parameterType="int" resultType="MovieReivewDTO">
-	 SELECT MOVIE_ID, REVIEW_NO, REVIEW_CONTENT, REVIEW_RATING, REVIEW_DATE_AT
+	 SELECT MOVIE_ID, USER_ID, REVIEW_NO, REVIEW_CONTENT, REVIEW_RATING, REVIEW_DATE_AT
 	   FROM MOVIE_REVIEW_T
 	  WHERE MOVIE_ID = #{movieId}
 	</select>
