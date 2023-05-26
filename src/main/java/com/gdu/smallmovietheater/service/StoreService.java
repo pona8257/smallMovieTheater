@@ -25,5 +25,5 @@ public interface StoreService {
 	public void removeCart(HttpServletRequest request, HttpServletResponse response);
 	
 	// payment
-	public int insertOrder(HttpServletRequest request);
+	public int insertOrder(HttpServletRequest request, Model model);
 }
