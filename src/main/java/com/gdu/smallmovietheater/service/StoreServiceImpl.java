@@ -76,6 +76,14 @@ public class StoreServiceImpl implements StoreService {
 			}
 		}
 		
+		String cartUp = request.getParameter("cartUp");
+		String cartDown = request.getParameter("cartDown");
+		if(cartUp != "") {
+			totalCount++;
+		} else if(cartDown != "") {
+			totalCount--;
+		}
+		
 		model.addAttribute("totalPrice", totalPrice);
 		model.addAttribute("cartsCount", totalCount);
 		return carts;

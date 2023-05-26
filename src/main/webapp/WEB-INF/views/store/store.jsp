@@ -84,9 +84,17 @@
   }
 </style>
 <script type="text/javascript">
+
+	
 	
 	function fnLogin(){
-		location.href = '${contextPath}/user/login.form';
+		  location.href = '${contextPath}/user/login.form';
+	}
+	function fnJoin(){
+		  location.href = '${contextPath}/user/join.form';
+	}
+	function fnLogout(){
+		  location.href = '${contextPath}/user/logout.do';
 	}
 	
 	if(${insertResult} != 0){
