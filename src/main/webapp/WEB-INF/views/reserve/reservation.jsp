@@ -188,7 +188,7 @@
 	      IMP.init('imp34858868'); //portone 대신 자신의 "가맹점 식별코드"를 사용하시면 됩니다
 	      IMP.request_pay({
 	         merchant_uid : 'merchant_' + new Date().getTime(),
-	         name : '결제테스트',
+	         name : '(주)작은영화관',
 	         amount : $('input[name="paymentTotalCost"]').val(),
 	         buyer_email : 'cs@portone.io',
 	         buyer_name : '구매자',
@@ -236,6 +236,10 @@
 	}
 	
 	function fnReservationInfo(){
+		$('#seatSelectScreen').hide();
+		$('#paymentScreen').hide();
+		$('#paymentInfo').hide();
+		$('#movieSelectScreen').hide();
 		$.ajax({
 			
 		})
@@ -399,7 +403,7 @@
 				</div>
 				<div class="selectTimeWrap">
 					<span>시간</span>
-					<div class="time" id="time" style="border: 1px solid white;">	<!-- 영화 선택시 상영 시간 목록을 보여준다. -->
+					<div class="time" id="time">	<!-- 영화 선택시 상영 시간 목록을 보여준다. -->
 						
 					</div>
 				</div>
