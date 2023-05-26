@@ -83,7 +83,7 @@
 		    	  let dateStr = screen.screenDate;
 		    	  let formattedDate = dateStr.slice(0, 4) + '-' + dateStr.slice(4, 6) + '-' + dateStr.slice(6);
 		    	  str += '<div>';
-			      str += '<a href="#" onclick="fnReserveSelectTime(\''+screen.movieDTO.title+'\', \''+screen.screenDate+'\', \''+ screen.screenTime +'\')"><strong>' + formattedDate + "&nbsp;&nbsp;&nbsp;" + screen.screenTime + '</strong>' + '&nbsp;&nbsp;&nbsp;' + screen.movieDTO.title + '<br>' + '</a>';
+			      str += '<a href="#" style="width: 250px;" onclick="fnReserveSelectTime(\''+screen.movieDTO.title+'\', \''+screen.screenDate+'\', \''+ screen.screenTime +'\')"><strong>' + formattedDate + "&nbsp;&nbsp;&nbsp;" + screen.screenTime + '</strong>' + '&nbsp;&nbsp;&nbsp;' + screen.movieDTO.title + '<br>' + '</a>';
 			      $('#time').html(str);
 		      })
 		    }
@@ -199,6 +199,7 @@
 	         if ( rsp.success ) {
 	            fnReserve();
 	            alert('결제가 완료되었습니다.');
+	            location.href = '${contextPath}/';
 	            
 	         } else {
 	            location.href = '${contextPath}/movie/reserve.form';
@@ -394,16 +395,16 @@
 				</div>
 			</div> -->
 					
-			<div class="selectWrap">
-				<div class="selctMovieWrap">
+			<div class="selectWrap" style="margin: 0px 20px 0px 20px; border: 1px solid white;">
+				<div class="selctMovieWrap" style="width: 50%; border-right: 1px solid white;">
 					<span>영화</span>
-					<div class="movies" id="movies" style="border: 1px solid white;">	<!-- 영화 목록을 보여준다. -->
+					<div class="movies" id="movies" >	<!-- 영화 목록을 보여준다. -->
 						
 					</div>
 				</div>
-				<div class="selectTimeWrap">
+				<div class="selectTimeWrap" style="width: 50%;"s>
 					<span>시간</span>
-					<div class="time" id="time">	<!-- 영화 선택시 상영 시간 목록을 보여준다. -->
+					<div class="time"  id="time">	<!-- 영화 선택시 상영 시간 목록을 보여준다. -->
 						
 					</div>
 				</div>
@@ -422,7 +423,7 @@
 						<input type="button" value="초기화" onclick="fnReset()">
 					</div>
 					
-					<div class="seat_inner_wrap" id="seats" style="border: 1px solid white;">
+					<div class="seat_inner_wrap" id="seats" style="margin: 0 auto; ">
 						
 					</div>
 					
@@ -452,29 +453,32 @@
 			</div>
 		</div>
 		
-		<div id="paymentInfo" style="border: 1px solid white; width: 350px">
+		<div id="paymentInfo" style="border: 1px solid white; width: 350px; margin: 0 auto;">
 			<form action="${contextPath}/movie/reservation.do">
 				<div><input type="hidden" name="userNo" value="${sessionScope.userNo}"></div>
-				<div id="selectMovieTitle">
-					
-				</div>
-				<div>
-					<div id="selectMovieTime">
-					
+				<div style="">
+					<div id="selectMovieTitle">
+						
 					</div>
-					<div id="selectMoviePoster">
-					
+					<div>
+						<div id="selectMovieTime">
+						
+						</div>
+						<div id="selectMoviePoster">
+						
+						</div>
+					</div>
+					<div id="selectMovieSeat">
+						
+					</div>
+					<div id="selectMoviePrice">
+						
+					</div>
+					<div id="nextPage">
+						<input type="button" value="다음" onclick="fnNextPage()">
 					</div>
 				</div>
-				<div id="selectMovieSeat">
-					
-				</div>
-				<div id="selectMoviePrice">
-					
-				</div>
-				<div id="nextPage">
-					<input type="button" value="다음" onclick="fnNextPage()">
-				</div>
+				
 				<div id="nextPage2">
 					<input type="button" id="btnNextPage2" value="다음" onclick="fnNextPage2()">
 				</div>
