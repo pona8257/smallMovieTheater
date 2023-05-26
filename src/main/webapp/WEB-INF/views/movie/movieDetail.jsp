@@ -240,7 +240,8 @@
     <c:if test="${not empty movieReviewList}">
       <div class="movie_review">
         <div style="width:10%;">순번</div>
-        <div style="width:20%;">평점</div>
+        <div style="width:10%;">ID</div>
+        <div style="width:10%;">평점</div>
         <div style="width:50%;">한줄평</div>
         <div style="width:20%;">삭제</div>
        </div>
@@ -248,7 +249,8 @@
        <form method="post" action="${contextPath}/movie/deleteMovieReview.do">
          <div class="movie_review">
           <div style="width:10%;">${i.index + 1} </div>
-          <div style="width:20%;">${movieReview.reviewRating}</div>
+          <div style="width:10%;">${movieReview.userId} </div>
+          <div style="width:10%;">${movieReview.reviewRating}</div>
           <div style="width:50%;">${movieReview.reviewContent}</div>
           <input type="hidden" value="${movieReview.reviewNo}" name="reviewNo">
           <input type="hidden" value="${movieDetail.movieId}" name="movieId">
