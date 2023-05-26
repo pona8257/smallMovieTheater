@@ -133,7 +133,7 @@ public class UserServiceImpl implements UserService {
 	      out.println("<script>");
 	      if(joinResult == 1) {
 	        out.println("alert('회원 가입되었습니다.');");
-	        out.println("location.href='" + request.getContextPath() + "/index.do';");
+	        out.println("location.href='" + request.getContextPath() + "/';");
 	      } else {
 	        out.println("alert('회원 가입에 실패했습니다.');");
 	        out.println("history.go(-2);");
@@ -179,6 +179,7 @@ public class UserServiceImpl implements UserService {
 	      
 	      HttpSession session = request.getSession();
 	      session.setAttribute("userId", userId);
+	      session.setAttribute("userNo", loginUserDTO.getUserNo());
 	     
 	      
 	      int updateResult = userMapper.updateUserAccess(userId);
@@ -203,7 +204,7 @@ public class UserServiceImpl implements UserService {
 	        PrintWriter out = response.getWriter();
 	        out.println("<script>");
 	        out.println("alert('일치하는 회원 정보가 없습니다.');");
-	        out.println("location.href='" + request.getContextPath() + "/index1.do';");
+	        out.println("location.href='" + request.getContextPath() + "/index.do';");
 	        out.println("</script>");
 	        out.flush();
 	        out.close();

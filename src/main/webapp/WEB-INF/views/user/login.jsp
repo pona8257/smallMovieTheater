@@ -122,7 +122,7 @@ body {
 	    fnDisplayRememberId();
 	    fnbtn1();
 	    fnbtn2();
-	  });
+	  })
   
 </script>
 </head>
