@@ -82,6 +82,10 @@
 	
 	function requestPay(){
 		
+		if(${carts.size() == 0}){
+			alert('장바구니가 비었습니다.');
+			return;
+		}
 		
 		IMP.init('imp34858868'); //portone 대신 자신의 "가맹점 식별코드"를 사용하시면 됩니다
 		IMP.request_pay({

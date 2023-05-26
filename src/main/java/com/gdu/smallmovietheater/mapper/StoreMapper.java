@@ -23,7 +23,7 @@ public interface StoreMapper {
 	
 	// payment
 	public int insertOrder(int userNo);
-	public OrderDTO selectOrder(int userNo);
+	public List<OrderDTO> selectOrder(int userNo);
 	public int insertOrderDetail(OrderDetailDTO orderDetailDTO);
 	
 }

@@ -18,7 +18,7 @@
   body {
     color: #FFF;
     padding: 20px;
-    text-align: center;
+    
     background-color: #000;
   }
   header {
@@ -56,6 +56,14 @@
   }
   .gnb > li > a:hover {
     border-bottom: 2px solid white;
+  }
+  
+  .wrap {
+  	margin: 0px 20px 0px 20px;
+  }
+  
+  .wrap > table {
+  	width: 100%;
   }
   
 </style>
@@ -118,7 +126,7 @@
 				</tr>
 			</thead>
 				
-			<tbody>
+			<tbody class="wrap">
 				<c:forEach items="${carts}" var="cart" varStatus="i">
 						<tr>
 							<td width="70px">${i.index + 1}</td>

@@ -86,11 +86,11 @@
 	
 	<!-- 결제 -->
 	<insert id="insertOrder" parameterType="int">
-		INSERT INTO ORDER_T
-			VALUES (ORDER_SEQ.NEXTVAL, ${userNo}, TO_CHAR(SYSDATE, 'YYYY-MM-DD'))
+		INSERT INTO ORDER_T (ORDER_NO, USER_NO, ORDER_DATE)
+			VALUES (ORDER_SEQ.NEXTVAL, #{userNo}, TO_CHAR(SYSDATE, 'YYYY-MM-DD'))
 	</insert>
 	
-	<select id="selectOrder" resultType="orderDTO">
+	<select id="selectOrder" parameterType="int" resultType="orderDTO">
 		SELECT ORDER_NO, USER_NO, ORDER_DATE
 		  FROM ORDER_T
 		 WHERE USER_NO = #{userNo}

@@ -121,7 +121,7 @@ public class StoreServiceImpl implements StoreService {
 		List<CartDTO> carts = storeMapper.selectCartList(userId);
 		
 		if(insertResult != 0) {
-			OrderDTO orderDTO = storeMapper.selectOrder(userNo);
+			List<OrderDTO> orders = storeMapper.selectOrder(userNo);
 			if(carts.size() != 0) {
 				storeMapper.deleteCartUser(userId);
 				int totalPrice = 0;
@@ -136,7 +136,7 @@ public class StoreServiceImpl implements StoreService {
 				model.addAttribute("cartsCount", totalCount);
 				model.addAttribute("carts", carts);
 			}
-			model.addAttribute("orderDTO", orderDTO);
+			model.addAttribute("orders", orders);
 		} 
 		
 		return insertResult;
