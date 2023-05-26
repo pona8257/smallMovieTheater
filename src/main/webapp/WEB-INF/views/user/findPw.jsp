@@ -15,15 +15,15 @@
 <div>
     
     <!-- 로그인이 안 된 상태 -->
-    <c:if test="${sessionScope.loginId == null}">    
+    <c:if test="${sessionScope.userId == null}">    
       <a href="${contextPath}/user/agree.form">회원가입</a>
       <a href="${contextPath}/user/login.form">로그인</a>
     </c:if>
     
     <!-- 로그인이 된 상태 -->
-    <c:if test="${sessionScope.loginId != null}">
+    <c:if test="${sessionScope.userId != null}">
       <div>
-        <a href="${contextPath}/user/mypage.do">${sessionScope.loginId}</a>님 환영합니다!
+        <a href="${contextPath}/user/mypage.do">${sessionScope.userId}</a>님 환영합니다!
       </div>
       <div>
         <a href="${contextPath}/user/logout.do">로그아웃</a>
