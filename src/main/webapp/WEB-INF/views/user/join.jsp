@@ -20,7 +20,12 @@
 	var verifyMobile = false;
 	var verifyEmail = false;
 
-	
+	// 회원가입 동의 페이지에서 취소하면 이전 페이지로 이동한다.(history.back();)
+	function fnCancel(){
+		$('#btnCancel').on('click',function(){
+			history.back();
+		})
+	}
 	// 1. 아이디 검사하기 (정규식 + 중복)
 	function fnCheckId() {
 		$('#userId').on('keyup', function() {
@@ -305,6 +310,7 @@
 	  
 	  // 함수 호출
 	  $(function(){
+		  fnCancel();
 		  fnCheckId();
 		  fnCheckPw();
 		  fnCheckPwAgain();
@@ -465,7 +471,7 @@
 
 			<div>
 				<button>가입하기</button>
-				<input type="button" value="취소하기">
+				<input type="button" value="취소하기" id="btnCancel">
 			</div>
 
 		</form>
