@@ -150,9 +150,9 @@
   let deleteResult = '${deleteResult}';
   if(deleteResult != ''){
 	  if(deleteResult == '1'){
-		  alert('게시물 등록 성공');
+		  alert('게시물 삭제 성공');
 	  } else {
-	      alert('게시글 등록 실패');
+	      alert('게시글 삭제 실패');
 	  }
   }
   function fnLogin(){
@@ -211,10 +211,8 @@
   </div>
   
   <hr>
-  
   <h2 style="text-align:left; margin-left:20px;">영화 한줄평 남기기</h2> 
     <form method="post" action="${contextPath}/movie/addMovieReview.do">
-      <input type="hidden" value="${movieDetail.movieId}" name="movieId">
         <div class="coment_all">
           <div class="coment">
             <input type="text" class="input_content" placeholder="한줄평 남기기" name="reviewContent">
@@ -222,9 +220,14 @@
           <div class="rating">
             <input type="text" class="input_rating" placeholder="평점(5.0 만점)" name="reviewRating">
           </div>
-          <div class="button">
-            <button>등록</button>
-          </div>
+          <input type="hidden" value="${movieDetail.movieId}" name="movieId">
+          <c:if test="${sessionScope.userId ne null}">
+            <div class="button">
+              <button>등록</button>
+            </div>
+          </c:if>
+          <c:if test="${sessionScope.userId eq null}">
+          </c:if>
         </div>
     </form>
     
@@ -244,12 +247,14 @@
       <c:forEach items="${movieReviewList}" var="movieReview" varStatus="i">
        <form method="post" action="${contextPath}/movie/deleteMovieReview.do">
          <div class="movie_review">
-          <div style="width:10%;">${i.index + 1}</div>
+          <div style="width:10%;">${i.index + 1} </div>
           <div style="width:20%;">${movieReview.reviewRating}</div>
           <div style="width:50%;">${movieReview.reviewContent}</div>
           <input type="hidden" value="${movieReview.reviewNo}" name="reviewNo">
-          <input type="hidden" value="${movieReview.movieId}" name="movieId">
-          <div style="width:20%;"><button>삭제</button></div>
+          <input type="hidden" value="${movieDetail.movieId}" name="movieId">
+          <c:if test="${movieReview.userId == sessionScope.userId}">
+            <div style="width:20%;"><button>삭제</button></div>
+          </c:if>
          </div>
        </form>
       </c:forEach>
