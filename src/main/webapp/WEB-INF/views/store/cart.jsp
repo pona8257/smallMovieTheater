@@ -69,12 +69,16 @@
   	width: 100%;
   }
   
-  
+  .chk_one {
+  	display: none;
+  }
   
 </style>
 <script type="text/javascript">
 	
-	
+	function fnLogout(){
+		  location.href = '${contextPath}/user/logout.do';
+	}
 	
 	function fnStore(){
 		location.href = '${contextPath}/store/store.do';
@@ -194,7 +198,13 @@
 						<td>${cart.productDTO.productName }</td>
 						<td>${cart.productDTO.price }원</td>
 						<td>${cart.productDTO.productContent } </td>
-						<td>${cart.count } 개 </td>
+						<td>
+							<label for="chkUp${cart.cartNo }">↑</label>
+							<input type="checkbox" id="chkUp${cart.cartNo }" value="${cart.cartNo }" name="countUp" class="chk_one" onclick="fncartUp()">
+							${cart.count } 개 
+							<label for="chkUp${cart.cartNo + 1 }">↓</label>
+							<input type="checkbox" id="chkUp${cart.cartNo + 1 }" value="${cart.cartNo }" name="countDown" class="chk_one" onclick="fncartDown()">
+						</td>
 					</tr>
 				</c:forEach>
 					<tr>
@@ -209,7 +219,11 @@
 		<button style="margin: 0px 20px 0px 20px;" onclick="requestPay()" id="pay">결제하기</button>
 	</div>
 	
-	
+	<script>
+		function fncartUp(){
+			location.href = '${contextPath}/store/cart.form?cartUp=' + $(this).val();
+		}
+	</script>
 	
 
 </body>
