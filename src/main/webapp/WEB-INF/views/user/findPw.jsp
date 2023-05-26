@@ -39,7 +39,7 @@
 				});		
 			}).then(function(findUser){
 				$.ajax({
-					url: '${contextPath}/user/sendTemporaryPassword',
+					url: '${contextPath}/index',
 					type: 'post',
 					data: 'userNo=' + findUser.userNo + '&userEmail=' + findUser.userEmail,
 					dataType: 'json',
@@ -56,9 +56,6 @@
 		});
 	}
 	
-	$(function(){
-		fnFindPw();
-	});
 
 </script>
 </head>
