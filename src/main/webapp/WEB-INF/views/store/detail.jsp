@@ -11,6 +11,7 @@
 <title>상세보기</title>
 <script src="${contextPath}/resources/js/lib/jquery-3.6.4.min.js"></script>
 <script type="text/javascript " src="https://service.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style>
 	a {
     text-decoration: none;
@@ -61,18 +62,15 @@
   
 </style>
 <script>
-
+	
+	function fnLogin(){
+		location.href = '${contextPath}/user/login.form';
+	}
+	
 	function fnStore(){
 		location.href = '${contextPath}/store/store.do';
 	}
 	
-	function fnInCart(){
-		
-		if(${sessionScope.userId == null}){
-			alert('로그인이 필요한 서비스입니다. \n 로그인창으로 이동하시겠습니까?');
-		}
-		
-	}
 	
 </script>
 </head>
@@ -84,9 +82,20 @@
 	    </a>
   	</header>
   
-	  <div class="login">
-	    <button>로그인</button>
-	  </div>
+   <c:if test="${sessionScope.userId == null}">
+    <div class="login">
+      <input type="button" onclick="fnJoin()" value="회원가입">
+      <input type="button" onclick="fnLogin()" value="로그인">
+    </div>
+  </c:if>
+  
+  <c:if test="${sessionScope.userId != null}">
+      <div style="text-align: right;" id="cart">
+        <a href="${contextPath}/user/mypage.do">${sessionScope.userId}</a>님 반갑습니다 ♥
+        <input type="button" onclick="fnLogout()" value="로그아웃">
+		<a href="${contextPath }/store/cart.form" id="cart_label"><i class="fa-solid fa-cart-shopping fa-2x"></i></a>
+      </div>
+  </c:if>
    
 	  <nav>
 	    <ul class="gnb">
@@ -118,7 +127,7 @@
 	       		 <input type="hidden" name="productNo" value="${product.productNo}">
 	       		 <br>
 	       		 <br>
-	       		 <button onclick="fnInCart()">장바구니에 담기</button>
+	       		<button>장바구니에 넣기</button>
 	       		</td>
 	       		<td><input type="button" value="뒤로가기" onclick="fnStore()"></td>
 			</tr>

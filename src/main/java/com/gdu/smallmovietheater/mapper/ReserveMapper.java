@@ -20,4 +20,5 @@ public interface ReserveMapper {
 	public ScreenDateDTO selectMovieByMovieAndTime(ScreenDateDTO screenDateDTO);
 	public List<ReservationDTO> getSeats(Map<String, Object> map);
 	public int reservation(ReservationDTO reservationDTO);
+	public ReservationDTO selectReservedInfo(ReservationDTO reservationDTO);
 }

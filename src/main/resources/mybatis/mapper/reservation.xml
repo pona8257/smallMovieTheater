@@ -115,4 +115,16 @@
 			(RESERVATION_SEQ.NEXTVAL, #{userNo}, #{screenDateDTO.screenDateNo}, #{movieDTO.movieId}, #{reservationRow}, #{reservationColumn}, #{paymentOption}, NULL, NULL, 1, SYSDATE, #{paymentTotalCost})
 	</insert>
 	
+	<select id="selectReservedInfo" parameterType="ReservationDTO" resultMap="ReservationMap">
+		SELECT M.TITLE, SD.SCREEN_DATE, SD.SCREEN_TIME, R.RESERVATION_ROW, R.RESERVATION_COLUMN, R.PAYMENT_OPTION, R.PAYMENT_TOTAL_COST, R.RESERVATION_AT
+		  FROM RESERVATION_T R JOIN MOVIE_T M
+		    ON R.MOVIE_ID = M.MOVIE_ID JOIN SCREEN_DATE_T SD
+		    ON R.SCREEN_DATE_NO = SD.SCREEN_DATE_NO
+		 WHERE R.USER_NO = #{userNo}
+		   AND R.MOVIE_ID = #{movieDTO.movieId}
+		   AND R.SCREEN_DATE_NO = #{screenDateDTO.screenDateNo}
+		   AND R.RESERVATION_ROW = #{reservationRow}
+		   AND R.RESERVATION_COLUMN = #{reservationColumn}
+	</select>
+	
 </mapper>

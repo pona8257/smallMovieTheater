@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import com.gdu.smallmovietheater.domain.CartDTO;
@@ -37,24 +38,26 @@ public class StoreServiceImpl implements StoreService {
 	
 	@Override
 	public int insertCart(HttpServletRequest request) {
+		
+		
 		HttpSession session = request.getSession();
 		String userId = (String)session.getAttribute("userId");
-		int count = Integer.parseInt(request.getParameter("count"));
-		CartDTO cartDTO = new CartDTO();
-		ProductDTO productDTO = new ProductDTO();
-		productDTO.setProductNo(Integer.parseInt(request.getParameter("productNo")));
-		cartDTO.setProductDTO(productDTO);
-		cartDTO.setCount(count);
-		cartDTO.setUserId(userId);
-		/*
-		HttpSession session = request.getSession();
-		String userId = (String)session.getAttribute("loginId");
-		cartDTO.setUserId(userId);
-		*/
+		if(userId != null) {
+			int count = Integer.parseInt(request.getParameter("count"));
+			CartDTO cartDTO = new CartDTO();
+			ProductDTO productDTO = new ProductDTO();
+			productDTO.setProductNo(Integer.parseInt(request.getParameter("productNo")));
+			cartDTO.setProductDTO(productDTO);
+			cartDTO.setCount(count);
+			cartDTO.setUserId(userId);
+			
+			int insertResult = storeMapper.insertCart(cartDTO);
+			return insertResult;
+			
+		} else {
+			return 0;
+		}
 		
-	
-		int insertResult = storeMapper.insertCart(cartDTO);
-		return insertResult;
 	}
 	
 	@Override
@@ -62,7 +65,6 @@ public class StoreServiceImpl implements StoreService {
 		
 		HttpSession session = request.getSession();
 		String userId = (String)session.getAttribute("userId");
-		
 		
 		List<CartDTO> carts = storeMapper.selectCartList(userId);
 		int totalPrice = 0;
@@ -107,16 +109,37 @@ public class StoreServiceImpl implements StoreService {
 		}
 	}
 	
-	
-	public int insertOrder(HttpServletRequest request) {
+	@Transactional
+	public int insertOrder(HttpServletRequest request, Model model) {
 		
 		HttpSession session = request.getSession();
 		int userNo = (int)session.getAttribute("userNo");
-		storeMapper.insertOrder(userNo);
+		String userId = (String)session.getAttribute("userId");
 		
-		OrderDTO orderDTO = storeMapper.selectOrder();
+		int insertResult = storeMapper.insertOrder(userNo);
 		
-		return 0;
+		List<CartDTO> carts = storeMapper.selectCartList(userId);
+		
+		if(insertResult != 0) {
+			List<OrderDTO> orders = storeMapper.selectOrder(userNo);
+			if(carts.size() != 0) {
+				storeMapper.deleteCartUser(userId);
+				int totalPrice = 0;
+				int totalCount = 0;
+				for(int i = 0; i < carts.size(); i++) {
+					for(int y = 0; y < carts.get(i).getCount(); y++) {
+						totalPrice += carts.get(i).getProductDTO().getPrice();
+						totalCount++;
+					}
+				}
+				model.addAttribute("totalPrice", totalPrice);
+				model.addAttribute("cartsCount", totalCount);
+				model.addAttribute("carts", carts);
+			}
+			model.addAttribute("orders", orders);
+		} 
+		
+		return insertResult;
 	}
 	
 	

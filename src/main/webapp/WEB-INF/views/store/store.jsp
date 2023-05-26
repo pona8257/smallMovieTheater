@@ -85,17 +85,24 @@
 </style>
 <script type="text/javascript">
 	
-	$('cart_label').on('click', function(ev){
-		if(${sessionScope.userId == null}){
-			alert('로그인이 필요한 서비스입니다. \n 로그인창으로 이동하시겠습니까?');
-		}
-	})
+	function fnLogin(){
+		location.href = '${contextPath}/user/login.form';
+	}
 	
-	if('${insertResult}' != ''){
+	if(${insertResult} != 0){
 		if(confirm('장바구니에 상품을 담았습니다.\n장바구니로 이동하시겠습니까?')){
 			location.href = '${contextPath}/store/cart.form';
 		}
 	}
+	
+	if(${insertResult} == 0){
+		if(confirm('로그인이 필요한 서비스입니다.\n로그인 페이지로 이동하시겠습니까?')){
+			location.href = '${contextPath}/user/login.form';
+		} else {
+			history.back();
+		}
+	}
+	
 </script>
 <body>
 
@@ -105,11 +112,22 @@
     </a>
   </header>
   
+  <c:if test="${sessionScope.userId == null}">
+    <div class="login">
+      <input type="button" onclick="fnJoin()" value="회원가입">
+      <input type="button" onclick="fnLogin()" value="로그인">
+    </div>
+  </c:if>
   
-  
- 	 <div id="cart">
+  <c:if test="${sessionScope.userId != null}">
+      <div style="text-align: right;" id="cart">
+        <a href="${contextPath}/user/mypage.do">${sessionScope.userId}</a>님 반갑습니다 ♥
+        <input type="button" onclick="fnLogout()" value="로그아웃">
 		<a href="${contextPath }/store/cart.form" id="cart_label"><i class="fa-solid fa-cart-shopping fa-2x"></i></a>
-	</div>
+      </div>
+  </c:if>
+  
+ 	 
    
   <nav>
     <ul class="gnb">

@@ -199,7 +199,6 @@
 	         if ( rsp.success ) {
 	            fnReserve();
 	            alert('결제가 완료되었습니다.');
-	            location.href = '${contextPath}/';
 	            
 	         } else {
 	            location.href = '${contextPath}/movie/reserve.form';
@@ -237,13 +236,19 @@
 	}
 	
 	function fnReservationInfo(){
+		$('#frmReserved').submit();
+		$('#selectMovieTitle').val('');
+		$('#selectMovieTime').val('');
+		$('#selectMoviePoster').val('');
+		$('#selectMovieSeat').val('');
+		$('#selectMoviePrice').val('');
+		$('#movieSelectScreen').show();
 		$('#seatSelectScreen').hide();
 		$('#paymentScreen').hide();
 		$('#paymentInfo').hide();
-		$('#movieSelectScreen').hide();
-		$.ajax({
-			
-		})
+		$('#btnPayment').hide();
+		$('#nextPage2').hide();
+		$('#pay').hide();
 	}
 	
 	$(function(){
@@ -454,7 +459,7 @@
 		</div>
 		
 		<div id="paymentInfo" style="border: 1px solid white; width: 350px; margin: 0 auto;">
-			<form action="${contextPath}/movie/reservation.do">
+			<form id="frmReserved" action="${contextPath}/movie/reserved.form" method="post">
 				<div><input type="hidden" name="userNo" value="${sessionScope.userNo}"></div>
 				<div style="">
 					<div id="selectMovieTitle">

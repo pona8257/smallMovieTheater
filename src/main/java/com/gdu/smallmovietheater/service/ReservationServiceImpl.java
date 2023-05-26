@@ -10,6 +10,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import com.gdu.smallmovietheater.domain.MovieDTO;
 import com.gdu.smallmovietheater.domain.ReservationDTO;
@@ -189,6 +190,31 @@ public class ReservationServiceImpl implements ReservationService {
 		} catch (Exception e) {
 			
 		}
+	}
+	
+	@Override
+	public void selectReservedInfo(HttpServletRequest request, Model model) {
+
+		String movieId = request.getParameter("movieId");
+		String screenDateNo = request.getParameter("screenDateNo");
+		String row = request.getParameter("row");
+		String column = request.getParameter("column");
+		String userNo = request.getParameter("userNo");
+		
+		ReservationDTO reservationDTO = new ReservationDTO();
+		MovieDTO movieDTO = new MovieDTO();
+		movieDTO.setMovieId(Integer.parseInt(movieId));
+		ScreenDateDTO screenDateDTO = new ScreenDateDTO();
+		screenDateDTO.setScreenDateNo(Integer.parseInt(screenDateNo));
+		reservationDTO.setUserNo(Integer.parseInt(userNo));
+		reservationDTO.setReservationRow(row);
+		reservationDTO.setReservationColumn(column);
+		reservationDTO.setMovieDTO(movieDTO);
+		reservationDTO.setScreenDateDTO(screenDateDTO);
+		
+		ReservationDTO reservedInfo = reserveMapper.selectReservedInfo(reservationDTO);
+		model.addAttribute("info", reservedInfo);
+		
 	}
 	
 }

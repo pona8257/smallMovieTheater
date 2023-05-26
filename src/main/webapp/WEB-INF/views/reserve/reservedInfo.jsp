@@ -41,14 +41,24 @@
 
 	<c:if test="${sessionScope.userId == null}">
 		<script>
-			function(){
-				alert('로그인 서비스입니다.');
-				loaction.href = '${contextPath}/user/login.form';
-			}
+			$(function(){
+				function(){
+					alert('로그인 서비스입니다.');
+					loaction.href = '${contextPath}/user/login.form';
+				}
+			})
 		</script>
  	</c:if>
  	<c:if test="${sessionScope.userId != null">
- 		
+ 		<h1>예매내역</h1>
+ 		<div>${info.movieDTO.title}</div>
+ 		<div>${info.screenDateDTO.screenDate}</div>
+ 		<div>${info.screenDateDTO.screenTime}</div>
+ 		<div>${info.reservationRow}</div>
+ 		<div>${info.reservationColumn}</div>
+ 		<div>${info.paymentOption}</div>
+ 		<div>${info.paymentTotalCost}</div>
+ 		<div>${info.reservationAt}</div>
  	</c:if>
 
 </body>
