@@ -134,6 +134,21 @@
 	      <strong>작은영화관</strong>
 	    </a>
   	</header>
+  	
+  	<c:if test="${sessionScope.userId == null}">
+    <div class="login">
+      <input type="button" onclick="fnJoin()" value="회원가입">
+      <input type="button" onclick="fnLogin()" value="로그인">
+    </div>
+  </c:if>
+  
+  <c:if test="${sessionScope.userId != null}">
+      <div style="text-align: right;" id="cart">
+        <a href="${contextPath}/user/mypage.do">${sessionScope.userId}</a>님 반갑습니다 ♥
+        <input type="button" onclick="fnLogout()" value="로그아웃">
+		<a href="${contextPath }/store/cart.form" id="cart_label"><i class="fa-solid fa-cart-shopping fa-2x"></i></a>
+      </div>
+  </c:if>
    
 	  <nav>
 	    <ul class="gnb">
@@ -162,8 +177,9 @@
 						<td>제품번호</td>
 						<td>제품사진</td>
 						<td>제품명</td>
+						<td>제품가격</td>
 						<td>설명</td>
-						<td>개수</td>
+						<td>수량</td>
 					</tr>
 				</thead>
 				<c:forEach items="${carts}" var="cart" varStatus="i">
@@ -171,10 +187,8 @@
 						<td width="70px">${i.index + 1}  <input type="checkbox" value="${cart.cartNo}" name="cartNo" class="chk_one"></td>
 							
 						<td width="100px"><img src="${contextPath}/resources/img/${cart.productDTO.imageName}.jpg" style="width: 100px;" ></td>
-						<td>
-							${cart.productDTO.productName }
-							${cart.productDTO.price }원
-						</td>
+						<td>${cart.productDTO.productName }</td>
+						<td>${cart.productDTO.price }원</td>
 						<td>${cart.productDTO.productContent } </td>
 						<td>${cart.count } 개 </td>
 					</tr>

@@ -10,11 +10,11 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import com.gdu.smallmovietheater.domain.CartDTO;
 import com.gdu.smallmovietheater.domain.OrderDTO;
-import com.gdu.smallmovietheater.domain.OrderDetailDTO;
 import com.gdu.smallmovietheater.domain.ProductDTO;
 import com.gdu.smallmovietheater.mapper.StoreMapper;
 
@@ -109,7 +109,7 @@ public class StoreServiceImpl implements StoreService {
 		}
 	}
 	
-	
+	@Transactional
 	public int insertOrder(HttpServletRequest request, Model model) {
 		
 		HttpSession session = request.getSession();
@@ -118,30 +118,26 @@ public class StoreServiceImpl implements StoreService {
 		
 		int insertResult = storeMapper.insertOrder(userNo);
 		
+		List<CartDTO> carts = storeMapper.selectCartList(userId);
 		
 		if(insertResult != 0) {
-			OrderDTO orderDTO = storeMapper.selectOrder();
-			List<CartDTO> carts = storeMapper.selectCartList(userId);
-			int totalPrice = 0;
-			int totalCount = 0;
-			OrderDetailDTO orderDetailDTO = new OrderDetailDTO();
-			orderDetailDTO.setOrderDTO(orderDTO);
-			CartDTO cartDTO = new CartDTO();
-			ProductDTO productDTO = new ProductDTO();
-			
-			for(int i = 0; i < carts.size(); i++) {
-				cartDTO.setCount(carts.get(i).getCount());
-				productDTO.setProductNo(carts.get(i).getProductDTO().getProductNo());
-				orderDetailDTO.setCartDTO(cartDTO);
-				orderDetailDTO.setProductDTO(productDTO);
-				for(int y = 0; y < carts.get(i).getCount(); y++) {
-					totalPrice += carts.get(i).getProductDTO().getPrice();
-					totalCount++;
+			OrderDTO orderDTO = storeMapper.selectOrder(userNo);
+			if(carts.size() != 0) {
+				storeMapper.deleteCartUser(userId);
+				int totalPrice = 0;
+				int totalCount = 0;
+				for(int i = 0; i < carts.size(); i++) {
+					for(int y = 0; y < carts.get(i).getCount(); y++) {
+						totalPrice += carts.get(i).getProductDTO().getPrice();
+						totalCount++;
+					}
 				}
+				model.addAttribute("totalPrice", totalPrice);
+				model.addAttribute("cartsCount", totalCount);
+				model.addAttribute("carts", carts);
 			}
-			model.addAttribute("totalPrice", totalPrice);
-			model.addAttribute("cartsCount", totalCount);
-		}
+			model.addAttribute("orderDTO", orderDTO);
+		} 
 		
 		return insertResult;
 	}

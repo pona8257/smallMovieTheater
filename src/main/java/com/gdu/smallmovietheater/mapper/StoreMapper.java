@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.gdu.smallmovietheater.domain.CartDTO;
 import com.gdu.smallmovietheater.domain.OrderDTO;
+import com.gdu.smallmovietheater.domain.OrderDetailDTO;
 import com.gdu.smallmovietheater.domain.ProductDTO;
 
 @Mapper
@@ -18,8 +19,11 @@ public interface StoreMapper {
 	public int insertCart(CartDTO cartDTO);
 	public List<CartDTO> selectCartList(String userId);
 	public int deleteCart(List<String> cartNo);
+	public int deleteCartUser(String userId);
 	
 	// payment
 	public int insertOrder(int userNo);
-	public OrderDTO selectOrder();
+	public OrderDTO selectOrder(int userNo);
+	public int insertOrderDetail(OrderDetailDTO orderDetailDTO);
+	
 }

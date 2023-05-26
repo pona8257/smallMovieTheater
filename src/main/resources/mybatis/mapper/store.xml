@@ -87,18 +87,25 @@
 	<!-- 결제 -->
 	<insert id="insertOrder" parameterType="int">
 		INSERT INTO ORDER_T
-			VALUES (ORDER_SEQ.NEXTVAL, ${userNo}, TO_CHAR(SYSDATE, 'YYMMDD'))
+			VALUES (ORDER_SEQ.NEXTVAL, ${userNo}, TO_CHAR(SYSDATE, 'YYYY-MM-DD'))
 	</insert>
 	
 	<select id="selectOrder" resultType="orderDTO">
 		SELECT ORDER_NO, USER_NO, ORDER_DATE
 		  FROM ORDER_T
+		 WHERE USER_NO = #{userNo}
 	</select>
 	
-	<insert id="insertOrderDetail" parameterType="">
+	<insert id="insertOrderDetail" parameterType="orderDetailDTO">
 		INSERT INTO ORDER_DETAIL_T
-		  VALUES (ORDER_DETAIL_SEQ.NEXTVAR, #{productDTO.productNo}, #{orderDTO.orderNo}, #{cartDTO.cartNo}, null)
+		  VALUES (ORDER_DETAIL_SEQ.NEXTVAR, #{productDTO.productNo}, #{orderDTO.orderNo}, #{cartDTO.cartNo}, COUPON_SEQ.NEXTVAL)
 	</insert>
+	
+	<delete id="deleteCartUser" parameterType="String">
+		DELETE FROM CART_T
+		 WHERE USER_ID = #{userId}
+	</delete>
+	
 	
 	
 </mapper>
