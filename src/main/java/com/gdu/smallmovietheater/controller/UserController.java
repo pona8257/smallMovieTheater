@@ -12,10 +12,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.gdu.smallmovietheater.domain.UserDTO;
 import com.gdu.smallmovietheater.service.UserService;
 
 @RequestMapping("/user")
@@ -87,6 +89,8 @@ public class UserController {
 	    model.addAttribute("userId", userService.getUserById(userId));
 	    return "user/mypage";
 	  }
+	
+	
 	@GetMapping("/findId.form")  // 아이디 찾기 화면으로 이동
 	  public String findIdForm() {
 	    return "user/findId";
@@ -109,6 +113,12 @@ public class UserController {
 	    map.put("isCorrect", userService.checkPw(userId, userPassword));
 	    return map;
 	  }
+	
+  @ResponseBody
+  @PostMapping(value="/findId.do", produces="application/json")  // 아이디 찾기
+  public Map<String, Object> findId(@RequestBody UserDTO userDTO) {
+    return userService.findUser(userDTO);
+  }
 	
 	
 }
