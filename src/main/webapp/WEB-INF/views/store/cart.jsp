@@ -69,9 +69,7 @@
   	width: 100%;
   }
   
-  .chk_one {
-  	display: none;
-  }
+  
   
 </style>
 <script type="text/javascript">
@@ -199,11 +197,7 @@
 						<td>${cart.productDTO.price }원</td>
 						<td>${cart.productDTO.productContent } </td>
 						<td>
-							<label for="chkUp${cart.cartNo }">↑</label>
-							<input type="checkbox" id="chkUp${cart.cartNo }" value="${cart.cartNo }" name="countUp" class="chk_one" onclick="fncartUp()">
 							${cart.count } 개 
-							<label for="chkUp${cart.cartNo + 1 }">↓</label>
-							<input type="checkbox" id="chkUp${cart.cartNo + 1 }" value="${cart.cartNo }" name="countDown" class="chk_one" onclick="fncartDown()">
 						</td>
 					</tr>
 				</c:forEach>
