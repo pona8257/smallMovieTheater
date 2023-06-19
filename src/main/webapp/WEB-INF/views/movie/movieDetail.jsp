@@ -76,7 +76,7 @@
     padding: 10px;
   }
   .right_section {
-    display: block;
+    height: 300px;
     width: 70%;
     float: right;
   }
@@ -165,6 +165,12 @@
     location.href = '${contextPath}/user/logout.do';
   }
   
+  function fnAlertLogin(){
+	  alert('로그인이 필요한 기능입니다.');
+  }
+  function fnAlertDelete(){
+	  alert('자신이 등록한 한줄평만 삭제 가능합니다.');
+  } 
 </script>
 <body>
   <header>
@@ -227,6 +233,9 @@
             </div>
           </c:if>
           <c:if test="${sessionScope.userId eq null}">
+            <div class="button">
+              <input type="button" onclick="fnAlertLogin()" value="등록">
+            </div>
           </c:if>
         </div>
     </form>
@@ -256,6 +265,9 @@
           <input type="hidden" value="${movieDetail.movieId}" name="movieId">
           <c:if test="${movieReview.userId == sessionScope.userId}">
             <div style="width:20%;"><button>삭제</button></div>
+          </c:if>
+          <c:if test="${movieReview.userId ne sessionScope.userId}">
+            <div style="width:20%;"><input type="button" onclick="fnAlertDelete()" value="삭제"></div>
           </c:if>
          </div>
        </form>

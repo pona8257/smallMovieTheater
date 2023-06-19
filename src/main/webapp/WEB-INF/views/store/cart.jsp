@@ -194,8 +194,8 @@
 							
 						<td width="100px"><img src="${contextPath}/resources/img/${cart.productDTO.imageName}.jpg" style="width: 100px;" ></td>
 						<td>${cart.productDTO.productName }</td>
-						<td>${cart.productDTO.price }원</td>
-						<td>${cart.productDTO.productContent } </td>
+						<td>${cart.productDTO.price}원</td>
+						<td>${cart.productDTO.productContent}</td>
 						<td>
 							${cart.count } 개 
 						</td>

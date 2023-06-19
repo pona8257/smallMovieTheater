@@ -178,6 +178,8 @@
     </ul>
   </nav>
   
+  
+  
 
   
   <div style="width:900px;">
@@ -194,7 +196,6 @@
       <input type="button" id="btnSearch" value="검색">
       <input type="button" value="목록" onclick="fnList()">
     </form>
-    
   </div>
   
   <div class="movieList">
@@ -216,6 +217,7 @@
   <div class="searchMovieList">
     
   </div>
+  
   
 </body>
 </html>
